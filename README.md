@@ -7,7 +7,7 @@
 <!-- page-only **[Read the README](https://github.com/Gernreich/ghb-chanter)** -->
 
 A full Great Highland bagpipe chanter in 3mm plywood. Its conical bore is a tapering
-square of four long strips, or a hexagon of six, finger-jointed and glued, from the
+square of four long strips, a hexagon of six or an octagon of eight, finger-jointed and glued, from the
 sole up into a collar of stacked plates. The tenon above the collar holds the reed's seat and goes into the
 chanter stock. It is the
 [standard strip chanter](https://gernreich.github.io/practice-chanters/#the-standard-strip-chanter)
@@ -41,6 +41,12 @@ scale, used only for the difference between this chanter and the Dis-Enchanter.
 <tr>
 <td align="center">Six sides: the whole chanter on one 571 × 171mm sheet.</td>
 </tr>
+<tr>
+<td align="center"><a href="cut-files/ghb-chanter-8-sided-sheet1-cut-files.svg"><img src="previews/ghb-chanter-8-sided-sheet1-cut-files.svg" alt="A sheet of parts: eight long, narrow tapering strips with finger-jointed edges, one with seven long slots, one with a single slot near its narrow end, two with one very long slot near their wide end; round collar and tenon plates; sixteen curved foot pieces, and three squares for the foot jig" width="100%"></a></td>
+</tr>
+<tr>
+<td align="center">Eight sides: the whole chanter on one 588 × 179mm sheet.</td>
+</tr>
 </table>
 
 ## The chanter
@@ -57,7 +63,8 @@ scale, used only for the difference between this chanter and the Dis-Enchanter.
 | Jig | a 46.5mm square base and two rings with a 36.8mm hole, pinned into a cup, to glue the foot up in; not part of the chanter |
 | Sheet | one 578 × 181mm sheet of 3mm ply, 27 parts with the jig |
 
-The table is the four-sided chanter's; [Six sides](#six-sides) says what changes.
+The table is the four-sided chanter's; [Six sides](#six-sides) and
+[Eight sides](#eight-sides) say what changes.
 
 | Hole | Down from the seat's top | This chanter | Its face | The Dis-Enchanter |
 |---|---|---|---|---|
@@ -120,10 +127,38 @@ as on the square. What changes:
   corners, against the square's 0.79mm.
 - **Sheet:** one 571 × 171mm sheet, 33 parts with the jig.
 
-Eight sides does not fit. Its faces are 0.40 of the round bore: high A would be a
-stadium 2.27mm wide and 10.3mm long, C 4.50 by 17.1mm, longer than a fingertip covers,
-and the strip beside high A would be 0.89mm wide. The generator takes `--sides=8` but
-fails its checks.
+## Eight sides
+
+`--sides=8` makes the bore an octagon of eight strips. Everything in
+[Six sides](#six-sides) holds, more so: the faces are 0.40 of the round bore, so the
+slots are narrower and longer.
+
+| Hole | Down from the seat's top | Stadium, wide × long | Its face |
+|---|---|---|---|
+| high A, back | 64.3mm | 2.27 × 10.26mm | 2.73mm |
+| high G | 79.6mm | 2.60 × 9.22mm | 3.04mm |
+| F | 104.1mm | 3.07 × 12.52mm | 3.55mm |
+| E | 128.6mm | 3.55 × 15.46mm | 4.06mm |
+| D | 153.1mm | 4.05 × 15.60mm | 4.56mm |
+| C | 175.3mm | 4.50 × 17.10mm | 5.03mm |
+| B | 203.6mm | 5.10 × 16.08mm | 5.61mm |
+| low A | 234.2mm | 5.74 × 14.84mm | 6.24mm |
+| side holes, both | 286.2mm | 6.72 × 24.19mm | 7.32mm |
+
+- **The slots are long.** C's is 17.1mm along the chanter. Each finger must cover its
+  slot's whole length; try the reach before gluing up.
+- **The corners are 135°.** A finger reaches 1.24mm past its face and the strip beside
+  it stands back 0.88mm, meeting it along a line mid-wall as on six sides.
+- **Beside high A the fingers are shorter.** The back strip owns both its corners there,
+  so a strip on the right owns neither and stands back at both edges. At full reach it
+  would be 0.89mm wide; so from 57.7 to 73.3mm down the fingers either side of it reach
+  1.09 to 1.17mm, and it is 1.11mm at its narrowest. A shorter finger meets its neighbour
+  the same way, with a deeper notch outside. Handle that strip with care.
+- **The side holes** are in the left and right strips, straight out to the sides, as on
+  the Dis-Enchanter.
+- **The foot** is two layers of eight strips; 3.89mm of it stands past the strips'
+  corners.
+- **Sheet:** one 588 × 179mm sheet, 39 parts with the jig.
 
 ## Before you cut
 
@@ -162,7 +197,7 @@ fails its checks.
 ## Turn it in 3D
 
 [turn.html](turn.html) shows the chanter as solid parts you can drag to turn and pull
-apart, each the cut file's own outline, four sides or six.
+apart, each the cut file's own outline, four, six or eight sides.
 
 <!-- page-only <iframe src="turn.html" title="The bagpipe chanter as solid parts you can drag to turn and pull apart: four darker tapering strips with finger-jointed edges and a row of holes along the front, a stack of round collar plates and a narrower tenon at the narrow end, and a round foot at the wide end" style="width:100%;height:560px;border:0"></iframe> -->
 
@@ -172,6 +207,7 @@ apart, each the cut file's own outline, four sides or six.
 python3 ghb_chanter.py --no-write                # the checks
 python3 ghb_chanter.py --out=cut-files           # the sheet, four sides
 python3 ghb_chanter.py --sides=6 --out=cut-files # the sheet, six sides
+python3 ghb_chanter.py --sides=8 --out=cut-files # the sheet, eight sides
 python3 ghb_chanter.py --plate=2.9 --out=mine    # for ply measured at 2.9mm
 python3 ghb_chanter.py --kerf=0.18 --out=mine    # for a laser with a 0.18mm kerf
 python3 ghb_chanter.py --page-to=turn.html       # the 3D view
@@ -212,7 +248,8 @@ cent.
 |---|---|
 | `cut-files/ghb-chanter-4-sided-sheet1-cut-files.svg` | the four-sided chanter: strips, foot, collar, tenon, and the foot jig |
 | `cut-files/ghb-chanter-6-sided-sheet1-cut-files.svg` | the six-sided chanter, the same parts |
-| `previews/ghb-chanter-4-sided-sheet1-cut-files.svg` · `previews/ghb-chanter-6-sided-sheet1-cut-files.svg` | display renderings of the sheets — **not** cut files |
+| `cut-files/ghb-chanter-8-sided-sheet1-cut-files.svg` | the eight-sided chanter, the same parts |
+| `previews/ghb-chanter-4-sided-sheet1-cut-files.svg` · `previews/ghb-chanter-6-sided-sheet1-cut-files.svg` · `previews/ghb-chanter-8-sided-sheet1-cut-files.svg` | display renderings of the sheets — **not** cut files |
 | `turn.html` | the 3D view, on a page of its own |
 | `ghb_chanter.py` | the generator: the Dis-Enchanter's measures, the cone model, the tapering strips, its checks |
 | `README.md` · `index.html` | this writeup and its published page; the markdown is the source |

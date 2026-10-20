@@ -363,19 +363,50 @@ def owners(Ls, x0, holes):
     return {c: SC.tidy(iv) for c, iv in out.items()}
 
 
+def reaches(own, x0, t):
+    """Each corner's runs with how far its owner's finger reaches, as
+    [(x0, x1, owner, reach)]. Where a hole's strip owns both its corners,
+    some strip owns neither and stands back at both; where that would leave
+    it narrower than MIN_STRIP, the fingers either side of it reach less, and
+    it stands back less: a shorter finger meets the strip beside it in the
+    same way, its end on that strip's end, with a deeper notch outside."""
+    n = SIDES
+    full, back = corner(t)
+    k = back / full
+    cuts = sorted(set(v for c in range(n) for a, b, w, g in own[c] for v in (a, b)))
+    out = {c: [] for c in range(n)}
+    for a, b in zip(cuts, cuts[1:]):
+        mid = (a + b) / 2
+        who = {c: next(w for p, q, w, g in own[c] if p <= mid <= q) for c in range(n)}
+        r = {c: full for c in range(n)}
+        for i in range(n):
+            if k and who[(i - 1) % n] != i and who[i] != i:
+                cap = (side(x0 + a) - MIN_STRIP - 0.05) / (2 * k)
+                for c in ((i - 1) % n, i):
+                    r[c] = max(0.0, min(r[c], cap))
+        for c in range(n):
+            iv = out[c]
+            if iv and iv[-1][2] == who[c] and abs(iv[-1][3] - r[c]) < 1e-12:
+                iv[-1][1] = b
+            else:
+                iv.append([a, b, who[c], r[c]])
+    return out
+
+
 def strip_outline(Ls, lo, hi, x0, t):
     """A strip from its top, x = 0, to the sole, x = Ls; u across it from its
     centre line, the bore's face out to side/2 each way, a finger reaching
     past it where the strip owns that corner, standing back from it where
     it does not. The face widens with the cone, so every edge slopes. lo, hi:
-    its edges' runs, [(x0, x1, owns)]."""
-    reach, back = corner(t)
+    its edges' runs, [(x0, x1, owns, reach)]."""
+    full, back = corner(t)
+    k = back / full
 
     def edge(runs, sign):
         pts = []
-        for a, b, owns in runs:
+        for a, b, owns, r in runs:
             for x in (a, b):
-                pts.append((x, sign * (side(x0 + x) / 2 + (reach if owns else -back))))
+                pts.append((x, sign * (side(x0 + x) / 2 + (r if owns else -k * r))))
         return pts
     pts = edge(lo, -1) + edge(hi, 1)[::-1]
     out = []
@@ -429,8 +460,9 @@ def build():
     Ls = REF_SOLE - x0
     on = holes_of(holes, vent)
     own = owners(Ls, x0, on)
+    reach = reaches(own, x0, t)
     for i in range(n):
-        runs = [[(a, c, w == i) for a, c, w, g in own[e]] for e in ((i - 1) % n, i)]
+        runs = [[(a, c, w == i, r) for a, c, w, r in reach[e]] for e in ((i - 1) % n, i)]
         o = strip_outline(Ls, runs[0], runs[1], x0, t)
         cuts = []
         for st, z, d in on:
@@ -501,7 +533,7 @@ def build():
     tube = outer(x0, t)
     part('collar socket', circle(0, 0, D / 2, 72), [('poly', tube)], x0, 'sock',
          f'the collar\'s socket plate, {D:.1f}mm', rnd=D / 2)
-    info = dict(ref=ref, got=got, holes=holes, vent=vent, t=t, Ls=Ls, x0=x0, own=own,
+    info = dict(ref=ref, got=got, holes=holes, vent=vent, t=t, Ls=Ls, x0=x0, own=own, reach=reach,
                 on=on, pins=pins, R=R, tube=tube)
     return parts, info
 
@@ -724,7 +756,7 @@ def page(path_out):
     sys.path.insert(0, os.path.join(HERE, '..', 'lasermade-tools'))
     import turn3d as t3
     designs, keep = {}, SIDES
-    for n in (4, 6):
+    for n in (4, 6, 8):
         SIDES = n
         designs[f'{n} sides'] = design3d()
     SIDES = keep
@@ -735,7 +767,7 @@ def page(path_out):
              'face you, high A’s on the back, and a side hole on each side near the sole; '
              'where a hole is wider than its face it is a stadium. Above the strips, the collar '
              'and the tenon with the reed’s seat; at the sole, two layers of flat strips '
-             'make the foot. The buttons switch between four strips and six.',
+             'make the foot. The buttons switch between four, six and eight strips.',
              'ghb_chanter.py')
 
 

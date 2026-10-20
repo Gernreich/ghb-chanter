@@ -9,7 +9,9 @@
 
 cut-files/ghb-chanter-4-sided-sheet1-cut-files.svg :: python3 ghb_chanter.py --out=$(dirname $OUT)
 cut-files/ghb-chanter-6-sided-sheet1-cut-files.svg :: python3 ghb_chanter.py --sides=6 --out=$(dirname $OUT)
+cut-files/ghb-chanter-8-sided-sheet1-cut-files.svg :: python3 ghb_chanter.py --sides=8 --out=$(dirname $OUT)
 previews/ghb-chanter-4-sided-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/ghb-chanter-4-sided-sheet1-cut-files.svg $OUT
 previews/ghb-chanter-6-sided-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/ghb-chanter-6-sided-sheet1-cut-files.svg $OUT
+previews/ghb-chanter-8-sided-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/ghb-chanter-8-sided-sheet1-cut-files.svg $OUT
 turn.html :: python3 ghb_chanter.py --page-to=$OUT
 index.html :: python3 ../lasermade-tools/md2html.py README.md $OUT
