@@ -1,0 +1,3 @@
+# URLs that answer every script 403, however real the page; doc-audit.py --links
+# accepts a 403 from these and nothing else (see its section 8).
+https://www.thingiverse.com/thing:2373962

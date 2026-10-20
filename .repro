@@ -1,0 +1,13 @@
+# How every shipped SVG and page in this repository is drawn. Checked by
+# lasermade-tools/repro-svg.py; $OUT is where the file must be written.
+#
+# ghb_chanter.py names its own sheet, so it writes into $OUT's directory and
+# the tool compares the file it asked for. It imports practice_chanters.py,
+# strip_chanter.py and chanter_model.py from the practice-chanters checkout
+# beside this one, and through them square-flute, four-hole-ocarinas and
+# swept-curve; turn3d.py comes from lasermade-tools.
+
+cut-files/ghb-chanter-sheet1-cut-files.svg :: python3 ghb_chanter.py --out=$(dirname $OUT)
+previews/ghb-chanter-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/ghb-chanter-sheet1-cut-files.svg $OUT
+turn.html :: python3 ghb_chanter.py --page-to=$OUT
+index.html :: python3 ../lasermade-tools/md2html.py README.md $OUT

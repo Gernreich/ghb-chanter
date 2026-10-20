@@ -1,0 +1,8 @@
+# Names doc-audit reads as filenames that are not files here.
+#
+# The generator imports these from practice-chanters, and turn3d.py from
+# lasermade-tools; the README links each repository.
+practice_chanters.py
+strip_chanter.py
+chanter_model.py
+turn3d.py
