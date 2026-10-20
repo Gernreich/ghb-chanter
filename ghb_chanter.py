@@ -761,7 +761,9 @@ def page(path_out):
         designs[f'{n} sides'] = design3d()
     SIDES = keep
     t3.write(path_out, 'Bagpipe chanter in 3D', designs,
-             'Drag to turn, scroll or pinch to zoom; draw Explode to pull the strips outward and '
+             'Drag to turn; right-drag, shift-drag or move two fingers to slide the view; '
+             'scroll or pinch to zoom in on whatever is under the pointer; double-click a part '
+             'to turn round it, and Reset view to go back. Draw Explode to pull the strips outward and '
              'the plates apart along the chanter. Every part is the cut file’s own outline. '
              'The strips, darker, taper with the cone: wider toward the sole. The finger holes '
              'face you, high A’s on the back, and a side hole on each side near the sole; '
