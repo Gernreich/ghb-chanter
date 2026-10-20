@@ -99,20 +99,26 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 <body>
 <button class="tog" type="button">theme</button>
 <div class="wrap">
-<nav><b>Contents</b><a class="l1" href="#bagpipe-chanter">Bagpipe chanter</a><a class="l2" href="#the-chanter">The chanter</a><a class="l2" href="#before-you-cut">Before you cut</a><a class="l2" href="#building-it">Building it</a><a class="l2" href="#turn-it-in-3d">Turn it in 3D</a><a class="l2" href="#regenerating">Regenerating</a><a class="l2" href="#the-model">The model</a><a class="l2" href="#files">Files</a></nav>
+<nav><b>Contents</b><a class="l1" href="#bagpipe-chanter">Bagpipe chanter</a><a class="l2" href="#the-chanter">The chanter</a><a class="l2" href="#six-sides">Six sides</a><a class="l2" href="#before-you-cut">Before you cut</a><a class="l2" href="#building-it">Building it</a><a class="l2" href="#turn-it-in-3d">Turn it in 3D</a><a class="l2" href="#regenerating">Regenerating</a><a class="l2" href="#the-model">The model</a><a class="l2" href="#files">Files</a></nav>
 <main>
 <h1 id="bagpipe-chanter">Bagpipe chanter</h1>
 <p><strong><a href="https://github.com/Gernreich/ghb-chanter">Read the README</a></strong></p>
-<p>A full Great Highland bagpipe chanter in 3mm plywood. Its conical bore is a tapering square of four long strips, finger-jointed and glued, from the sole up into a collar of stacked plates. The tenon above the collar holds the reed's seat and goes into the chanter stock. It is the <a href="https://gernreich.github.io/practice-chanters/#the-standard-strip-chanter">standard strip chanter</a> taken to a full chanter: four long strips round a square bore, with a real chanter's holes.</p>
+<p>A full Great Highland bagpipe chanter in 3mm plywood. Its conical bore is a tapering square of four long strips, or a hexagon of six, finger-jointed and glued, from the sole up into a collar of stacked plates. The tenon above the collar holds the reed's seat and goes into the chanter stock. It is the <a href="https://gernreich.github.io/practice-chanters/#the-standard-strip-chanter">standard strip chanter</a> taken to a full chanter: four long strips round a square bore, with a real chanter's holes.</p>
 <p>The real chanter is Jeremy Starcher's <a href="https://www.thingiverse.com/thing:2373962">Dis-Enchanter</a> (2017), a 3D-printed chanter that its designer copied from a 1970s Hardie. Its bore, holes, collar and sole are measured from its STL, and this chanter keeps every hole where the Dis-Enchanter's is.</p>
 <p>Output is millimetre-true — <code>1 user unit = 1mm</code> with a physical <code>width</code>/<code>height</code> — so it prints and cuts at real size.</p>
 <p><strong>It has not been cut or played yet.</strong> The Dis-Enchanter is a model to follow, not a proven scale: its designer calls it mostly working, with F and G low on the first print. The holes here are sized by an acoustic model that cannot reproduce a real chanter's scale, used only for the difference between this chanter and the Dis-Enchanter. <a href="#before-you-cut">Before you cut</a> says what that costs.</p>
 <table>
 <tr>
-<td align="center"><a href="cut-files/ghb-chanter-sheet1-cut-files.svg"><img src="previews/ghb-chanter-sheet1-cut-files.svg" alt="A sheet of parts: four long tapering strips with finger-jointed edges, one with seven round holes growing larger toward its wide end, one with a single hole near its narrow end, two with one large hole near their wide end; round plates for the collar, getting smaller, and smaller round plates with a hole and two pin holes for the tenon; eight curved foot pieces, and three squares for the foot jig, two with a large round hole" width="100%"></a></td>
+<td align="center"><a href="cut-files/ghb-chanter-4-sided-sheet1-cut-files.svg"><img src="previews/ghb-chanter-4-sided-sheet1-cut-files.svg" alt="A sheet of parts: four long tapering strips with finger-jointed edges, one with seven round holes growing larger toward its wide end, one with a single hole near its narrow end, two with one large hole near their wide end; round plates for the collar, getting smaller, and smaller round plates with a hole and two pin holes for the tenon; eight curved foot pieces, and three squares for the foot jig, two with a large round hole" width="100%"></a></td>
 </tr>
 <tr>
-<td align="center">The whole chanter on one 578 × 181mm sheet.</td>
+<td align="center">Four sides: the whole chanter on one 578 × 181mm sheet.</td>
+</tr>
+<tr>
+<td align="center"><a href="cut-files/ghb-chanter-6-sided-sheet1-cut-files.svg"><img src="previews/ghb-chanter-6-sided-sheet1-cut-files.svg" alt="A sheet of parts: six long tapering strips with finger-jointed edges, one with seven slot-shaped holes growing larger toward its wide end, one with a single slot near its narrow end, two with one long slot near their wide end; round collar and tenon plates; twelve curved foot pieces, and three squares for the foot jig" width="100%"></a></td>
+</tr>
+<tr>
+<td align="center">Six sides: the whole chanter on one 571 × 171mm sheet.</td>
 </tr>
 </table>
 
@@ -159,6 +165,7 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 </tbody>
 </table>
 </div>
+<p>The table is the four-sided chanter's; <a href="#six-sides">Six sides</a> says what changes.</p>
 <div class="tw">
 <table>
 <thead>
@@ -239,6 +246,87 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 </div>
 <p><strong>Why the holes are bigger.</strong> The Dis-Enchanter's wall is 2mm everywhere. A strip is 3mm, and a hole through a thicker wall sounds flatter, so each hole is opened up until its note sounds where the Dis-Enchanter's does, in the model. The side holes set low G, so they are sized for it the same way. High A's hole comes within 0.68mm of its face's edges. That is why its strip owns both corners there: the fingers round it are the strip's own ply.</p>
 <p><strong>Why there is no butt-jointed version.</strong> The practice chanters have one. Here the holes are too wide for their faces: with butt joints, high A and the side holes would have under a millimetre of ply beside them before a glue line.</p>
+<h2 id="six-sides">Six sides</h2>
+<p><code>--sides=6</code> makes the bore a hexagon of six strips, the same area at every height. The holes are the same: the model knows the bore only by its area and the wall, so each hole has the same area as the square chanter's. The back is a face, so the thumb sits on it as on the square. What changes:</p>
+<ul>
+<li><strong>The holes are stadiums.</strong> A hexagon's face is 0.55 of the round bore it stands for, against the square's 0.89: high A's face is 3.72mm, where its round hole would be 5.32mm. So every hole is a stadium, a slot with round ends, as wide as its face allows less 0.35mm and as long as its area needs. The model takes it as the round hole of that area; a slot's sound is not quite a round hole's, so expect more tuning.</li>
+</ul>
+<div class="tw">
+<table>
+<thead>
+<tr>
+<th>Hole</th>
+<th>Down from the seat's top</th>
+<th>Stadium, wide × long</th>
+<th>Its face</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>high A, back</td>
+<td>64.3mm</td>
+<td>3.26 × 7.51mm</td>
+<td>3.72mm</td>
+</tr>
+<tr>
+<td>high G</td>
+<td>79.6mm</td>
+<td>3.70 × 6.87mm</td>
+<td>4.15mm</td>
+</tr>
+<tr>
+<td>F</td>
+<td>104.1mm</td>
+<td>4.36 × 9.29mm</td>
+<td>4.84mm</td>
+</tr>
+<tr>
+<td>E</td>
+<td>128.6mm</td>
+<td>5.02 × 11.47mm</td>
+<td>5.53mm</td>
+</tr>
+<tr>
+<td>D</td>
+<td>153.1mm</td>
+<td>5.71 × 11.69mm</td>
+<td>6.22mm</td>
+</tr>
+<tr>
+<td>C</td>
+<td>175.3mm</td>
+<td>6.32 × 12.84mm</td>
+<td>6.85mm</td>
+</tr>
+<tr>
+<td>B</td>
+<td>203.6mm</td>
+<td>7.13 × 12.24mm</td>
+<td>7.65mm</td>
+</tr>
+<tr>
+<td>low A</td>
+<td>234.2mm</td>
+<td>8.00 × 11.48mm</td>
+<td>8.51mm</td>
+</tr>
+<tr>
+<td>side holes, both</td>
+<td>286.2mm</td>
+<td>9.37 × 18.32mm</td>
+<td>9.98mm</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><strong>The corners are 120°.</strong> The fingers are cut square, so, as in RegularBox on the Boxes generator, a finger reaches 1.73mm past its face and the strip beside it stands back 0.87mm. The two strips meet along a line in the middle of the wall, with a small groove inside the bore and a notch outside at every finger. The kerf makes that line a light press, and the glue seals it. Fill the outside notches with glue too, and shellac the bore.</li>
+<li><strong>The side holes</strong> are in the back-left and back-right strips, so the bore turns them 60° toward the back, and they open 9.37mm wide.</li>
+<li><strong>The narrowest strip</strong> is 1.90mm, beside high A, where the back strip owns both its corners and the strips beside it give theirs away. Handle the strips with care.</li>
+<li><strong>The foot</strong> is two layers of six strips; 3.19mm of it stands past the strips' corners, against the square's 0.79mm.</li>
+<li><strong>Sheet:</strong> one 571 × 171mm sheet, 33 parts with the jig.</li>
+</ul>
+<p>Eight sides does not fit. Its faces are 0.40 of the round bore: high A would be a stadium 2.27mm wide and 10.3mm long, C 4.50 by 17.1mm, longer than a fingertip covers, and the strip beside high A would be 0.89mm wide. The generator takes <code>--sides=8</code> but fails its checks.</p>
 <h2 id="before-you-cut">Before you cut</h2>
 <ul>
 <li><strong>The scale is the model's, not a measured one.</strong> The model sounds the Dis-Enchanter's own notes 2 to 3 semitones apart from a real chanter's at the top, so it cannot set a pitch. It sizes each hole for the difference a 3mm strip wall makes. If the Dis-Enchanter's scale is right, this one should be close; its designer found F and G low.</li>
@@ -248,7 +336,7 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 </ul>
 <h2 id="building-it">Building it</h2>
 <ol type="1">
-<li>Cut the sheet. Dry-fit the four strips first. Each strip's two edges have different finger patterns, so it goes in only one way. The strips taper, so the wide ends all go to the sole.</li>
+<li>Cut the sheet. Dry-fit the strips first. Each strip's two edges have different finger patterns, so it goes in only one way. The strips taper, so the wide ends all go to the sole.</li>
 <li>Glue the strips round a waxed, tapering former, or round a waxed drill bit, to keep glue out of the bore. Clamp lightly and wipe off any glue that squeezes out.</li>
 <li>Press the jig's base and two rings together on two 2mm pins, and line the cup with packing tape or wax so the glue cannot stick to it. Stand the chanter in it on its sole. Glue the foot's layers in round the strips one at a time, the circle centring each. Each piece runs round one corner of the circle to the inner corner beyond. Each layer turns the other way from the one below, so no seam runs through.</li>
 <li>Glue the strips' top 3mm into the collar's socket plate, and that plate to the collar's round plates above it, widest last.</li>
@@ -257,12 +345,13 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 <li>Hemp the tenon into the chanter stock. Push the reed's staple into the seat.</li>
 </ol>
 <h2 id="turn-it-in-3d">Turn it in 3D</h2>
-<p><a href="turn.html">turn.html</a> shows the chanter as solid parts you can drag to turn and pull apart, each the cut file's own outline.</p>
+<p><a href="turn.html">turn.html</a> shows the chanter as solid parts you can drag to turn and pull apart, each the cut file's own outline, four sides or six.</p>
 <iframe src="turn.html" title="The bagpipe chanter as solid parts you can drag to turn and pull apart: four darker tapering strips with finger-jointed edges and a row of holes along the front, a stack of round collar plates and a narrower tenon at the narrow end, and a round foot at the wide end" style="width:100%;height:560px;border:0"></iframe>
 
 <h2 id="regenerating">Regenerating</h2>
 <pre><code>python3 ghb_chanter.py --no-write                # the checks
-python3 ghb_chanter.py --out=cut-files           # the sheet
+python3 ghb_chanter.py --out=cut-files           # the sheet, four sides
+python3 ghb_chanter.py --sides=6 --out=cut-files # the sheet, six sides
 python3 ghb_chanter.py --plate=2.9 --out=mine    # for ply measured at 2.9mm
 python3 ghb_chanter.py --kerf=0.18 --out=mine    # for a laser with a 0.18mm kerf
 python3 ghb_chanter.py --page-to=turn.html       # the 3D view</code></pre>
@@ -270,9 +359,9 @@ python3 ghb_chanter.py --page-to=turn.html       # the 3D view</code></pre>
 <p>Writing anything, it first checks:</p>
 <ul>
 <li>every note sounds where the Dis-Enchanter's does, in the model;</li>
-<li>every hole is where the Dis-Enchanter's is, cuts round, and fits its face;</li>
+<li>every hole is where the Dis-Enchanter's is, and fits its face at its area;</li>
 <li>every hole keeps ply all round it, and every corner is one strip's all the way;</li>
-<li>the strips make the Dis-Enchanter's cone, square, from the sole into the collar;</li>
+<li>the strips make the Dis-Enchanter's cone, and none is too narrow anywhere;</li>
 <li>the collar is its bead, the foot its sole, and the seat its taper;</li>
 <li>the foot clears the side holes, and the jig holds it on its circle;</li>
 <li>every pin keeps ply round it;</li>
@@ -285,12 +374,16 @@ python3 ghb_chanter.py --page-to=turn.html       # the 3D view</code></pre>
 <table>
 <tbody>
 <tr>
-<td><code>cut-files/ghb-chanter-sheet1-cut-files.svg</code></td>
-<td>the chanter: strips, foot, collar, tenon, and the foot jig</td>
+<td><code>cut-files/ghb-chanter-4-sided-sheet1-cut-files.svg</code></td>
+<td>the four-sided chanter: strips, foot, collar, tenon, and the foot jig</td>
 </tr>
 <tr>
-<td><code>previews/ghb-chanter-sheet1-cut-files.svg</code></td>
-<td>a display rendering of the sheet — <strong>not</strong> a cut file</td>
+<td><code>cut-files/ghb-chanter-6-sided-sheet1-cut-files.svg</code></td>
+<td>the six-sided chanter, the same parts</td>
+</tr>
+<tr>
+<td><code>previews/ghb-chanter-4-sided-sheet1-cut-files.svg</code> · <code>previews/ghb-chanter-6-sided-sheet1-cut-files.svg</code></td>
+<td>display renderings of the sheets — <strong>not</strong> cut files</td>
 </tr>
 <tr>
 <td><code>turn.html</code></td>
