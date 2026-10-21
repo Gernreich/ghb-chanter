@@ -33,19 +33,19 @@ scale, used only for the difference between this chanter and the Dis-Enchanter.
 <td align="center"><a href="cut-files/ghb-chanter-4-sided-sheet1-cut-files.svg"><img src="previews/ghb-chanter-4-sided-sheet1-cut-files.svg" alt="A sheet of parts: four long tapering strips with finger-jointed edges, one with seven round holes growing larger toward its wide end, one with a single hole near its narrow end, two with one large hole near their wide end; round plates for the collar, getting smaller, and smaller round plates with a hole and two pin holes for the tenon; eight curved foot pieces, and three squares for the foot jig, two with a large round hole" width="100%"></a></td>
 </tr>
 <tr>
-<td align="center">Four sides: the whole chanter on one 578 × 181mm sheet.</td>
+<td align="center"><sub>four sides: the whole chanter on one 578 × 181mm sheet</sub></td>
 </tr>
 <tr>
 <td align="center"><a href="cut-files/ghb-chanter-6-sided-sheet1-cut-files.svg"><img src="previews/ghb-chanter-6-sided-sheet1-cut-files.svg" alt="A sheet of parts: six long tapering strips with finger-jointed edges, one with seven slot-shaped holes growing larger toward its wide end, one with a single slot near its narrow end, two with one long slot near their wide end; round collar and tenon plates; twelve curved foot pieces, and three squares for the foot jig" width="100%"></a></td>
 </tr>
 <tr>
-<td align="center">Six sides: the whole chanter on one 571 × 171mm sheet.</td>
+<td align="center"><sub>six sides: the whole chanter on one 571 × 171mm sheet</sub></td>
 </tr>
 <tr>
 <td align="center"><a href="cut-files/ghb-chanter-8-sided-sheet1-cut-files.svg"><img src="previews/ghb-chanter-8-sided-sheet1-cut-files.svg" alt="A sheet of parts: eight long, narrow tapering strips with finger-jointed edges, one with seven long slots, one with a single slot near its narrow end, two with one very long slot near their wide end; round collar and tenon plates; sixteen curved foot pieces, and three squares for the foot jig" width="100%"></a></td>
 </tr>
 <tr>
-<td align="center">Eight sides: the whole chanter on one 588 × 179mm sheet.</td>
+<td align="center"><sub>eight sides: the whole chanter on one 588 × 179mm sheet</sub></td>
 </tr>
 </table>
 
@@ -88,8 +88,8 @@ The table is the four-sided chanter's; [Six sides](#six-sides) and
 **Why the holes are bigger.** The Dis-Enchanter's wall is 2mm everywhere. A strip is
 3mm, and a hole through a thicker wall sounds flatter, so each hole is opened up until
 its note sounds where the Dis-Enchanter's does, in the model. The side holes set low G,
-so they are sized for it the same way. High A's hole comes within 0.68mm of its face's
-edges. That is why its strip owns both corners there: the fingers round it are the
+so they are sized for it the same way. High A's hole leaves about 0.34mm of its face
+either side. That is why its strip owns both corners there: the fingers round it are the
 strip's own ply.
 
 **Why there is no butt-jointed version.** The practice chanters have one. Here the holes
@@ -210,9 +210,9 @@ cut file's own outline, four, six or eight sides.
 
 <!-- page-only <iframe src="turn.html" title="The bagpipe chanter as solid parts you can drag to turn and pull apart: four darker tapering strips with finger-jointed edges and a row of holes along the front, a stack of round collar plates and a narrower tenon at the narrow end, and a round foot at the wide end" style="width:100%;height:560px;border:0"></iframe> -->
 
-## Regenerating
+## Regenerating it
 
-```
+```sh
 python3 ghb_chanter.py --no-write                # the checks
 python3 ghb_chanter.py --out=cut-files           # the sheet, four sides
 python3 ghb_chanter.py --sides=6 --out=cut-files # the sheet, six sides
