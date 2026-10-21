@@ -49,6 +49,13 @@ scale, used only for the difference between this chanter and the Dis-Enchanter.
 </tr>
 </table>
 
+Built for **[LaserMadeMusic](https://www.youtube.com/@LaserMadeMusic)**.
+
+**[The rest of the build files](https://gernreich.github.io/)** — every instrument,
+generator and tool, indexed.
+
+**[Download everything as a ZIP](https://github.com/Gernreich/ghb-chanter/archive/refs/heads/main.zip)**
+
 ## The chanter
 
 | | |
@@ -186,18 +193,20 @@ slots are narrower and longer.
    sole. Glue the foot's layers in round the strips one at a time, the circle centring
    each. Each piece runs round one corner of the circle to the inner corner beyond. Each
    layer turns the other way from the one below, so no seam runs through.
-4. Glue the strips' top 3mm into the collar's socket plate, and that plate to the
-   collar's round plates above it, widest last.
-5. Press the collar's round plates and the tenon together on two 2mm pins. Cut the pins
-   flush with the collar's bottom face. Their ends land on the strips' top, inside the
+4. Press the collar's round plates, widest last, and the tenon together on two 2mm
+   pins. Cut the pins flush with the collar's bottom face.
+5. Glue the strips' top 3mm into the collar's socket plate, and that plate to the
+   collar's round plates above it. The pins' ends land on the strips' top, inside the
    socket plate.
 6. Seal the bore with shellac on a pipe cleaner, and let it dry. Brush the seams outside.
 7. Hemp the tenon into the chanter stock. Push the reed's staple into the seat.
 
 ## Turn it in 3D
 
-[turn.html](turn.html) shows the chanter as solid parts you can drag to turn and pull
-apart, each the cut file's own outline, four, six or eight sides.
+<!-- readme-only -->
+The chanter turns in 3D on the [published page](https://gernreich.github.io/ghb-chanter/#turn-it-in-3d),
+which GitHub does not run: drag to turn it and pull it apart into its parts, each the
+cut file's own outline, four, six or eight sides.
 
 <!-- page-only <iframe src="turn.html" title="The bagpipe chanter as solid parts you can drag to turn and pull apart: four darker tapering strips with finger-jointed edges and a row of holes along the front, a stack of round collar plates and a narrower tenon at the narrow end, and a round foot at the wide end" style="width:100%;height:560px;border:0"></iframe> -->
 
