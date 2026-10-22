@@ -1,5 +1,7 @@
 # Bagpipe chanter
 
+**[← All projects](https://gernreich.github.io/)**
+
 <!-- readme-only -->
 **[Read the writeup](https://gernreich.github.io/ghb-chanter/)** ·
 **[Turn it in 3D](https://gernreich.github.io/ghb-chanter/#turn-it-in-3d)**
@@ -51,7 +53,7 @@ scale, used only for the difference between this chanter and the Dis-Enchanter.
 
 Built for **[LaserMadeMusic](https://www.youtube.com/@LaserMadeMusic)**.
 
-**[The rest of the build files](https://gernreich.github.io/)** — every instrument,
+**[The rest of the build files](https://gernreich.github.io/lasermademusic.html)** — every instrument,
 generator and tool, indexed.
 
 **[Download everything as a ZIP](https://github.com/Gernreich/ghb-chanter/archive/refs/heads/main.zip)**
