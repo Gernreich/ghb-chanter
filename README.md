@@ -4,9 +4,11 @@
 
 <!-- readme-only -->
 **[Read the writeup](https://gernreich.github.io/ghb-chanter/)** ·
-**[Turn it in 3D](https://gernreich.github.io/ghb-chanter/#turn-it-in-3d)**
+**[Turn it in 3D](https://gernreich.github.io/ghb-chanter/)**
 
-<!-- page-only **[Read the README](https://github.com/Gernreich/ghb-chanter)** -->
+<!-- page-only **[Read the README](https://github.com/Gernreich/ghb-chanter)** · **[Turn it in 3D on a page of its own](turn.html)** -->
+
+<!-- page-only <iframe src="turn.html" title="The bagpipe chanter as solid parts you can drag to turn and pull apart: four darker tapering strips with finger-jointed edges and a row of holes along the front, a stack of round collar plates and a narrower tenon at the narrow end, and a round foot at the wide end" style="width:100%;height:560px;border:0"></iframe> -->
 
 A full Great Highland bagpipe chanter in 3mm plywood. Its conical bore is a tapering
 square of four long strips, a hexagon of six or an octagon of eight, finger-jointed and glued, from the
@@ -206,11 +208,11 @@ slots are narrower and longer.
 ## Turn it in 3D
 
 <!-- readme-only -->
-The chanter turns in 3D on the [published page](https://gernreich.github.io/ghb-chanter/#turn-it-in-3d),
+The chanter turns in 3D at the top of the [published page](https://gernreich.github.io/ghb-chanter/),
 which GitHub does not run: drag to turn it and pull it apart into its parts, each the
 cut file's own outline, four, six or eight sides.
 
-<!-- page-only <iframe src="turn.html" title="The bagpipe chanter as solid parts you can drag to turn and pull apart: four darker tapering strips with finger-jointed edges and a row of holes along the front, a stack of round collar plates and a narrower tenon at the narrow end, and a round foot at the wide end" style="width:100%;height:560px;border:0"></iframe> -->
+<!-- page-only The 3D view is at [the top of this page](#bagpipe-chanter). It also opens [on a page of its own](turn.html). -->
 
 ## Regenerating it
 
