@@ -8,7 +8,7 @@
 
 <!-- page-only **[Read the README](https://github.com/Gernreich/ghb-chanter)** · **[Turn it in 3D on a page of its own](turn.html)** -->
 
-<!-- page-only <iframe src="turn.html" title="The bagpipe chanter as solid parts you can drag to turn and pull apart: four darker tapering strips with finger-jointed edges and a row of holes along the front, a stack of round collar plates and a narrower tenon at the narrow end, and a round foot at the wide end" style="width:100%;height:560px;border:0"></iframe> -->
+<!-- page-only <iframe src="turn.html?embed" title="The bagpipe chanter as solid parts you can drag to turn and pull apart: four darker tapering strips with finger-jointed edges and a row of holes along the front, a stack of round collar plates and a narrower tenon at the narrow end, and a round foot at the wide end" style="width:100%;height:560px;border:0"></iframe> -->
 
 A full Great Highland bagpipe chanter in 3mm plywood. Its conical bore is a tapering
 square of four long strips, a hexagon of six or an octagon of eight, finger-jointed and glued, from the
