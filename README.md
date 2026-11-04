@@ -273,3 +273,7 @@ The Dis-Enchanter is by Jeremy Starcher (jstarcher on Thingiverse) and is licens
 [CC BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/). This chanter is made
 from its measures, so it is released under the same licence:
 [CC BY-NC-SA 4.0](LICENSE).
+
+## Credits
+
+Made by Michael Gernreich with [Claude](https://www.anthropic.com/claude) (Anthropic), working in Claude Code, which co-wrote the code and the documentation. Commits Claude made carry a `Co-Authored-By: Claude` line.
