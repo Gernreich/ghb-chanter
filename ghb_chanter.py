@@ -173,7 +173,7 @@ def phi(k, w, z):
 def cone(f, z1, z2):
     """The cone's transfer matrix from z2 up to z1, (p, U), spherical waves."""
     w = 2 * math.pi * f
-    rh = (REF_CONE[0] + REF_CONE[1] * (z1 + z2) / 2) / 4000
+    rh = (REF_CONE[0] + REF_CONE[1] * (z1 + z2) / 2) / 2000     # loss radius: the radius, m
     k = w / M.C - 1j * 3.0e-5 * math.sqrt(f) / rh
 
     a, b = phi(k, w, z1), phi(k, w, z2)
@@ -201,7 +201,7 @@ def admittance(f, holes, opened):
     zin = (m[0][0] * zr + m[0][1]) / (m[1][0] * zr + m[1][1])
     # above the seat: the cone closed at its apex carries sin(kx)/x alone
     w = 2 * math.pi * f
-    rh = (REF_CONE[0] / 2) / 2000
+    rh = REF_CONE[0] / 2000                                     # the radius at the seat, m
     k = w / M.C - 1j * 3.0e-5 * math.sqrt(f) / rh
     (pa, pb), (ua, ub) = phi(k, w, 0.0)
     return (1 / zin - ub / pb).imag
