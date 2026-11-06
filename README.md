@@ -10,7 +10,7 @@
 
 <!-- page-only <iframe src="turn.html?embed" title="The bagpipe chanter as solid parts you can drag to turn and pull apart: four darker tapering strips with finger-jointed edges and a row of holes along the front, a stack of round collar plates and a narrower tenon at the narrow end, and a round foot at the wide end" style="width:100%;height:560px;border:0"></iframe> -->
 
-A full Great Highland bagpipe chanter in 3mm plywood. Its conical bore is a tapering
+A full Great Highland bagpipe chanter in 3 mm plywood. Its conical bore is a tapering
 square of four long strips, a hexagon of six or an octagon of eight, finger-jointed and glued, from the
 sole up into a collar of stacked plates. The tenon above the collar holds the reed's seat and goes into the
 chanter stock. It is the
@@ -37,19 +37,19 @@ scale, used only for the difference between this chanter and the Dis-Enchanter.
 <td align="center"><a href="cut-files/ghb-chanter-4-sided-sheet1-cut-files.svg"><img src="previews/ghb-chanter-4-sided-sheet1-cut-files.svg" alt="A sheet of parts: four long tapering strips with finger-jointed edges, one with seven round holes growing larger toward its wide end, one with a single hole near its narrow end, two with one large hole near their wide end; round plates for the collar, getting smaller, and smaller round plates with a hole and two pin holes for the tenon; eight curved foot pieces, and three squares for the foot jig, two with a large round hole" width="100%"></a></td>
 </tr>
 <tr>
-<td align="center"><sub>four sides: the whole chanter on one 578 × 181mm sheet</sub></td>
+<td align="center"><sub>four sides: the whole chanter on one 578 × 181 mm sheet</sub></td>
 </tr>
 <tr>
 <td align="center"><a href="cut-files/ghb-chanter-6-sided-sheet1-cut-files.svg"><img src="previews/ghb-chanter-6-sided-sheet1-cut-files.svg" alt="A sheet of parts: six long tapering strips with finger-jointed edges, one with seven slot-shaped holes growing larger toward its wide end, one with a single slot near its narrow end, two with one long slot near their wide end; round collar and tenon plates; twelve curved foot pieces, and three squares for the foot jig" width="100%"></a></td>
 </tr>
 <tr>
-<td align="center"><sub>six sides: the whole chanter on one 571 × 171mm sheet</sub></td>
+<td align="center"><sub>six sides: the whole chanter on one 571 × 171 mm sheet</sub></td>
 </tr>
 <tr>
 <td align="center"><a href="cut-files/ghb-chanter-8-sided-sheet1-cut-files.svg"><img src="previews/ghb-chanter-8-sided-sheet1-cut-files.svg" alt="A sheet of parts: eight long, narrow tapering strips with finger-jointed edges, one with seven long slots, one with a single slot near its narrow end, two with one very long slot near their wide end; round collar and tenon plates; sixteen curved foot pieces, and three squares for the foot jig" width="100%"></a></td>
 </tr>
 <tr>
-<td align="center"><sub>eight sides: the whole chanter on one 588 × 179mm sheet</sub></td>
+<td align="center"><sub>eight sides: the whole chanter on one 588 × 179 mm sheet</sub></td>
 </tr>
 </table>
 
@@ -64,35 +64,35 @@ generator and tool, indexed.
 
 | | |
 |---|---|
-| Bore | the Dis-Enchanter's cone made square, the same area at every height: 4.57mm square where the strips meet the collar, 18.76mm at the sole, against its 5.16 to 21.17mm round. Each face leans 1.3° |
-| Strips | 312mm long, tapering, finger-jointed, glued. Round each hole its strip owns both corners, so the hole has ply all round |
+| Bore | the Dis-Enchanter's cone made square, the same area at every height: 4.57 mm square where the strips meet the collar, 18.76 mm at the sole, against its 5.16 to 21.17 mm round. Each face leans 1.3° |
+| Strips | 312 mm long, tapering, finger-jointed, glued. Round each hole its strip owns both corners, so the hole has ply all round |
 | Holes | where the Dis-Enchanter's are: seven in the front strip, high A in the back, and a side hole in each side strip near the sole |
-| Foot | two layers of four flat strips round the strips' bottom, cut to the Dis-Enchanter's 36.5mm sole: 6mm tall, its sole 7.25mm |
-| Collar | the Dis-Enchanter's bead, plate by plate: 34.1, 33.3, 31.5 and 28.2mm round plates with its 4.8 to 5.1mm throat, then a 23.1mm plate the strips' top stands in |
-| Tenon | 7 round plates 17mm across, with the reed's seat tapering 7.0 to 5.2mm through them, the Dis-Enchanter's taper. Hemp it into the stock |
-| Joints | the strips, foot and collar's socket plate glued; the collar's round plates and the tenon press-fit on two 2mm pins; the seams sealed with shellac |
-| Jig | a 46.5mm square base and two rings with a 36.8mm hole, pinned into a cup, to glue the foot up in; not part of the chanter |
-| Sheet | one 578 × 181mm sheet of 3mm ply, 27 parts with the jig |
+| Foot | two layers of four flat strips round the strips' bottom, cut to the Dis-Enchanter's 36.5 mm sole: 6 mm tall, its sole 7.25 mm |
+| Collar | the Dis-Enchanter's bead, plate by plate: 34.1, 33.3, 31.5 and 28.2 mm round plates with its 4.8 to 5.1 mm throat, then a 23.1 mm plate the strips' top stands in |
+| Tenon | 7 round plates 17 mm across, with the reed's seat tapering 7.0 to 5.2 mm through them, the Dis-Enchanter's taper. Hemp it into the stock |
+| Joints | the strips, foot and collar's socket plate glued; the collar's round plates and the tenon press-fit on two 2 mm pins; the seams sealed with shellac |
+| Jig | a 46.5 mm square base and two rings with a 36.8 mm hole, pinned into a cup, to glue the foot up in; not part of the chanter |
+| Sheet | one 578 × 181 mm sheet of 3 mm ply, 27 parts with the jig |
 
 The table is the four-sided chanter's; [Six sides](#six-sides) and
 [Eight sides](#eight-sides) say what changes.
 
 | Hole | Down from the seat's top | This chanter | Its face | The Dis-Enchanter |
 |---|---|---|---|---|
-| high A, back | 64.3mm | 5.32mm | 5.99mm | 4.80mm |
-| high G | 79.6mm | 5.35mm | 6.69mm | 4.80mm |
-| F | 104.1mm | 6.81mm | 7.80mm | 6.00mm |
-| E | 128.6mm | 8.15mm | 8.92mm | 7.15mm |
-| D | 153.1mm | 8.72mm | 10.03mm | 7.20mm |
-| C | 175.3mm | 9.61mm | 11.04mm | 7.90mm |
-| B | 203.6mm | 9.86mm | 12.33mm | 7.85mm |
-| low A | 234.2mm | 9.97mm | 13.72mm | 7.85mm |
-| side holes, both | 286.2mm | 13.95mm | 16.09mm | 9.60mm |
+| high A, back | 64.3 mm | 5.32 mm | 5.99 mm | 4.80 mm |
+| high G | 79.6 mm | 5.35 mm | 6.69 mm | 4.80 mm |
+| F | 104.1 mm | 6.81 mm | 7.80 mm | 6.00 mm |
+| E | 128.6 mm | 8.15 mm | 8.92 mm | 7.15 mm |
+| D | 153.1 mm | 8.72 mm | 10.03 mm | 7.20 mm |
+| C | 175.3 mm | 9.61 mm | 11.04 mm | 7.90 mm |
+| B | 203.6 mm | 9.86 mm | 12.33 mm | 7.85 mm |
+| low A | 234.2 mm | 9.97 mm | 13.72 mm | 7.85 mm |
+| side holes, both | 286.2 mm | 13.95 mm | 16.09 mm | 9.60 mm |
 
-**Why the holes are bigger.** The Dis-Enchanter's wall is 2mm everywhere. A strip is
-3mm, and a hole through a thicker wall sounds flatter, so each hole is opened up until
+**Why the holes are bigger.** The Dis-Enchanter's wall is 2 mm everywhere. A strip is
+3 mm, and a hole through a thicker wall sounds flatter, so each hole is opened up until
 its note sounds where the Dis-Enchanter's does, in the model. The side holes set low G,
-so they are sized for it the same way. High A's hole leaves about 0.34mm of its face
+so they are sized for it the same way. High A's hole leaves about 0.34 mm of its face
 either side. That is why its strip owns both corners there: the fingers round it are the
 strip's own ply.
 
@@ -108,35 +108,35 @@ has the same area as the square chanter's. The back is a face, so the thumb sits
 as on the square. What changes:
 
 - **The holes are stadiums.** A hexagon's face is 0.55 of the round bore it stands for,
-  against the square's 0.89: high A's face is 3.72mm, where its round hole would be
-  5.32mm. So every hole is a stadium, a slot with round ends, as wide as its face allows
-  less 0.35mm and as long as its area needs. The model takes it as the round hole of
+  against the square's 0.89: high A's face is 3.72 mm, where its round hole would be
+  5.32 mm. So every hole is a stadium, a slot with round ends, as wide as its face allows
+  less 0.35 mm and as long as its area needs. The model takes it as the round hole of
   that area; a slot's sound is not quite a round hole's, so expect more tuning.
 
 | Hole | Down from the seat's top | Stadium, wide × long | Its face |
 |---|---|---|---|
-| high A, back | 64.3mm | 3.26 × 7.51mm | 3.72mm |
-| high G | 79.6mm | 3.70 × 6.87mm | 4.15mm |
-| F | 104.1mm | 4.36 × 9.29mm | 4.84mm |
-| E | 128.6mm | 5.02 × 11.47mm | 5.53mm |
-| D | 153.1mm | 5.71 × 11.69mm | 6.22mm |
-| C | 175.3mm | 6.32 × 12.84mm | 6.85mm |
-| B | 203.6mm | 7.13 × 12.24mm | 7.65mm |
-| low A | 234.2mm | 8.00 × 11.48mm | 8.51mm |
-| side holes, both | 286.2mm | 9.37 × 18.32mm | 9.98mm |
+| high A, back | 64.3 mm | 3.26 × 7.51 mm | 3.72 mm |
+| high G | 79.6 mm | 3.70 × 6.87 mm | 4.15 mm |
+| F | 104.1 mm | 4.36 × 9.29 mm | 4.84 mm |
+| E | 128.6 mm | 5.02 × 11.47 mm | 5.53 mm |
+| D | 153.1 mm | 5.71 × 11.69 mm | 6.22 mm |
+| C | 175.3 mm | 6.32 × 12.84 mm | 6.85 mm |
+| B | 203.6 mm | 7.13 × 12.24 mm | 7.65 mm |
+| low A | 234.2 mm | 8.00 × 11.48 mm | 8.51 mm |
+| side holes, both | 286.2 mm | 9.37 × 18.32 mm | 9.98 mm |
 
 - **The corners are 120°.** The fingers are cut square, so, as in RegularBox on the Boxes generator,
-  a finger reaches 1.73mm past its face and the strip beside it stands back 0.87mm. The
+  a finger reaches 1.73 mm past its face and the strip beside it stands back 0.87 mm. The
   two strips meet along a line in the middle of the wall, with a small groove inside the
   bore and a notch outside at every finger. The kerf makes that line a light press, and
   the glue seals it. Fill the outside notches with glue too, and shellac the bore.
 - **The side holes** are in the back-left and back-right strips, so the bore turns them
-  60° toward the back, and they open 9.37mm wide.
-- **The narrowest strip** is 1.90mm, beside high A, where the back strip owns both its
+  60° toward the back, and they open 9.37 mm wide.
+- **The narrowest strip** is 1.90 mm, beside high A, where the back strip owns both its
   corners and the strips beside it give theirs away. Handle the strips with care.
-- **The foot** is two layers of six strips; 3.19mm of it stands past the strips'
-  corners, against the square's 0.79mm.
-- **Sheet:** one 571 × 171mm sheet, 33 parts with the jig.
+- **The foot** is two layers of six strips; 3.19 mm of it stands past the strips'
+  corners, against the square's 0.79 mm.
+- **Sheet:** one 571 × 171 mm sheet, 33 parts with the jig.
 
 ## Eight sides
 
@@ -146,42 +146,42 @@ slots are narrower and longer.
 
 | Hole | Down from the seat's top | Stadium, wide × long | Its face |
 |---|---|---|---|
-| high A, back | 64.3mm | 2.27 × 10.26mm | 2.73mm |
-| high G | 79.6mm | 2.60 × 9.22mm | 3.04mm |
-| F | 104.1mm | 3.07 × 12.52mm | 3.55mm |
-| E | 128.6mm | 3.55 × 15.46mm | 4.06mm |
-| D | 153.1mm | 4.05 × 15.60mm | 4.56mm |
-| C | 175.3mm | 4.50 × 17.10mm | 5.03mm |
-| B | 203.6mm | 5.10 × 16.08mm | 5.61mm |
-| low A | 234.2mm | 5.74 × 14.84mm | 6.24mm |
-| side holes, both | 286.2mm | 6.72 × 24.19mm | 7.32mm |
+| high A, back | 64.3 mm | 2.27 × 10.26 mm | 2.73 mm |
+| high G | 79.6 mm | 2.60 × 9.22 mm | 3.04 mm |
+| F | 104.1 mm | 3.07 × 12.52 mm | 3.55 mm |
+| E | 128.6 mm | 3.55 × 15.46 mm | 4.06 mm |
+| D | 153.1 mm | 4.05 × 15.60 mm | 4.56 mm |
+| C | 175.3 mm | 4.50 × 17.10 mm | 5.03 mm |
+| B | 203.6 mm | 5.10 × 16.08 mm | 5.61 mm |
+| low A | 234.2 mm | 5.74 × 14.84 mm | 6.24 mm |
+| side holes, both | 286.2 mm | 6.72 × 24.19 mm | 7.32 mm |
 
-- **The slots are long.** C's is 17.1mm along the chanter. Each finger must cover its
+- **The slots are long.** C's is 17.1 mm along the chanter. Each finger must cover its
   slot's whole length; try the reach before gluing up.
-- **The corners are 135°.** A finger reaches 1.24mm past its face and the strip beside
-  it stands back 0.88mm, meeting it along a line mid-wall as on six sides.
+- **The corners are 135°.** A finger reaches 1.24 mm past its face and the strip beside
+  it stands back 0.88 mm, meeting it along a line mid-wall as on six sides.
 - **Beside high A the fingers are shorter.** The back strip owns both its corners there,
   so a strip on the right owns neither and stands back at both edges. At full reach it
-  would be 0.89mm wide; so from 57.7 to 73.3mm down the fingers either side of it reach
-  1.09 to 1.17mm, and it is 1.11mm at its narrowest. A shorter finger meets its neighbour
+  would be 0.89 mm wide; so from 57.7 to 73.3 mm down the fingers either side of it reach
+  1.09 to 1.17 mm, and it is 1.11 mm at its narrowest. A shorter finger meets its neighbour
   the same way, with a deeper notch outside. Handle that strip with care.
 - **The side holes** are in the left and right strips, straight out to the sides, as on
   the Dis-Enchanter.
-- **The foot** is two layers of eight strips; 3.89mm of it stands past the strips'
+- **The foot** is two layers of eight strips; 3.89 mm of it stands past the strips'
   corners.
-- **Sheet:** one 588 × 179mm sheet, 39 parts with the jig.
+- **Sheet:** one 588 × 179 mm sheet, 39 parts with the jig.
 
 ## Before you cut
 
 - **The scale is the model's, not a measured one.** The model sounds the Dis-Enchanter's
   own notes 2 to 3 semitones apart from a real chanter's at the top, so it cannot set a
-  pitch. It sizes each hole for the difference a 3mm strip wall makes. If the
+  pitch. It sizes each hole for the difference a 3 mm strip wall makes. If the
   Dis-Enchanter's scale is right, this one should be close; its designer found F and G
   low.
 - **The reed decides the pitch.** A Great Highland chanter reed sits in the seat; move it
   in or out to set low A, as on any chanter.
-- **The ply must be 3mm.** Measure it. A strip's thickness is the holes' wall, and the
-  holes were sized for 3mm. Pass `--plate=` with what you measured.
+- **The ply must be 3 mm.** Measure it. A strip's thickness is the holes' wall, and the
+  holes were sized for 3 mm. Pass `--plate=` with what you measured.
 - **Holes open, never close.** Tune a flat note by opening its hole with a file. A sharp
   one needs tape.
 
@@ -192,14 +192,14 @@ slots are narrower and longer.
    to the sole.
 2. Glue the strips round a waxed, tapering former, or round a waxed drill bit, to keep
    glue out of the bore. Clamp lightly and wipe off any glue that squeezes out.
-3. Press the jig's base and two rings together on two 2mm pins, and line the cup with
+3. Press the jig's base and two rings together on two 2 mm pins, and line the cup with
    packing tape or wax so the glue cannot stick to it. Stand the chanter in it on its
    sole. Glue the foot's layers in round the strips one at a time, the circle centring
    each. Each piece runs round one corner of the circle to the inner corner beyond. Each
    layer turns the other way from the one below, so no seam runs through.
-4. Press the collar's round plates, widest last, and the tenon together on two 2mm
+4. Press the collar's round plates, widest last, and the tenon together on two 2 mm
    pins. Cut the pins flush with the collar's bottom face.
-5. Glue the strips' top 3mm into the collar's socket plate, and that plate to the
+5. Glue the strips' top 3 mm into the collar's socket plate, and that plate to the
    collar's round plates above it. The pins' ends land on the strips' top, inside the
    socket plate.
 6. Seal the bore with shellac on a pipe cleaner, and let it dry. Brush the seams outside.
