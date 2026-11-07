@@ -230,9 +230,9 @@ The generator imports `practice_chanters.py`, `strip_chanter.py` and `chanter_mo
 from [practice-chanters](https://github.com/Gernreich/practice-chanters), and that
 imports from [square-flute](https://github.com/Gernreich/square-flute),
 [four-hole-ocarinas](https://github.com/Gernreich/four-hole-ocarinas) and
-[swept-curve](https://github.com/Gernreich/swept-curve). The 3D view uses `turn3d.py`
-from [lasermade-tools](https://github.com/Gernreich/lasermade-tools). Check them all out
-side by side.
+[swept-curve](https://github.com/Gernreich/swept-curve). The 3D view is written by the `turn3d`
+program in [lasermade-tools](https://github.com/Gernreich/lasermade-tools), built there with
+`cargo build --release`. Check them all out side by side.
 
 One more is optional: with [bore-tmm](https://github.com/Gernreich/bore-tmm) checked out beside it too and built (`cargo build --release`), the model searches for each note in bore-tmm's Rust port of it, which gives the same results bit for bit, much sooner. Without it the Python runs, as it always did.
 

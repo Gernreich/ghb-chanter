@@ -761,7 +761,6 @@ def placed(p, info):
 def design3d():
     """The chanter for the 3D page."""
     parts, info = build()
-    import turn3d as t3
     mid = REF_SOLE / 2
     out = []
     for p in parts:
@@ -774,20 +773,30 @@ def design3d():
         else:
             ex = ((p.x - mid) / 60, 0, 0)
         wood = 'dark' if p.kind == 'strip' else 'ply'
-        out.append(t3.placed({'o': p.outline, 'h': holes, 'e': []}, placed(p, info), ex, wood))
+        out.append({'o': p.outline, 'h': holes, 'e': [], 'm': placed(p, info), 'x': ex, 'w': wood})
     return {'parts': out, 'ex': 60, 'view': [-0.12, 0.32, 3.0]}
 
 
+
+def turn3d(path, title, designs, note, by, spin=False):
+    """Write the 3D page with lasermade-tools' turn3d program (Rust), which
+    expects that checkout beside this one, built. Each part is {'o', 'h',
+    'e'} with its placing matrix 'm' (or a list of matrices, chained), its
+    explode direction 'x' and its wood 'w'."""
+    import json
+    import subprocess
+    spec = {'title': title, 'note': note, 'by': by, 'spin': spin, 'designs': designs}
+    exe = os.path.join(HERE, '..', 'lasermade-tools', 'target', 'release', 'turn3d')
+    subprocess.run([exe, '--out=' + path], input=json.dumps(spec).encode(), check=True)
+
 def page(path_out):
     global SIDES
-    sys.path.insert(0, os.path.join(HERE, '..', 'lasermade-tools'))
-    import turn3d as t3
     designs, keep = {}, SIDES
     for n in (4, 6, 8):
         SIDES = n
         designs[f'{n} sides'] = design3d()
     SIDES = keep
-    t3.write(path_out, 'Bagpipe chanter in 3D', designs,
+    turn3d(path_out, 'Bagpipe chanter in 3D', designs,
              'Drag to turn; right-drag, shift-drag or move two fingers to slide the view; '
              'scroll or pinch to zoom in on whatever is under the pointer; double-click a part '
              'to turn round it, and Reset view to go back. Draw Explode to pull the strips outward and '

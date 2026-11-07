@@ -5,7 +5,7 @@
 # the tool compares the file it asked for. It imports practice_chanters.py,
 # strip_chanter.py and chanter_model.py from the practice-chanters checkout
 # beside this one, and through them square-flute, four-hole-ocarinas and
-# swept-curve; turn3d.py comes from lasermade-tools.
+# swept-curve; the 3D page is written by lasermade-tools' turn3d program (built).
 
 cut-files/ghb-chanter-4-sided-sheet1-cut-files.svg :: python3 ghb_chanter.py --out=$(dirname $OUT)
 cut-files/ghb-chanter-6-sided-sheet1-cut-files.svg :: python3 ghb_chanter.py --sides=6 --out=$(dirname $OUT)
