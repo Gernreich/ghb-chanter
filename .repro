@@ -1,17 +1,17 @@
 # How every shipped SVG and page in this repository is drawn. Checked by
 # lasermade-tools' repro-svg; $OUT is where the file must be written.
 #
-# ghb_chanter.py names its own sheet, so it writes into $OUT's directory and
-# the tool compares the file it asked for. It imports practice_chanters.py,
-# strip_chanter.py and chanter_model.py from the practice-chanters checkout
-# beside this one, and through them square-flute, four-hole-ocarinas and
-# swept-curve; the 3D page is written by lasermade-tools' turn3d program (built).
+# ghb_chanter is Rust (repro-svg builds the crate first) and names its own
+# sheet, so it writes into $OUT's directory and the tool compares the file it
+# asked for. The crate builds on practice-chanters and, through it,
+# square-flute, four-hole-ocarinas and swept-curve, and on bore-tmm and
+# lasermade-tools, all checked out beside this one.
 
-cut-files/ghb-chanter-4-sided-sheet1-cut-files.svg :: python3 ghb_chanter.py --out=$(dirname $OUT)
-cut-files/ghb-chanter-6-sided-sheet1-cut-files.svg :: python3 ghb_chanter.py --sides=6 --out=$(dirname $OUT)
-cut-files/ghb-chanter-8-sided-sheet1-cut-files.svg :: python3 ghb_chanter.py --sides=8 --out=$(dirname $OUT)
+cut-files/ghb-chanter-4-sided-sheet1-cut-files.svg :: target/release/ghb_chanter --out=$(dirname $OUT)
+cut-files/ghb-chanter-6-sided-sheet1-cut-files.svg :: target/release/ghb_chanter --sides=6 --out=$(dirname $OUT)
+cut-files/ghb-chanter-8-sided-sheet1-cut-files.svg :: target/release/ghb_chanter --sides=8 --out=$(dirname $OUT)
 previews/ghb-chanter-4-sided-sheet1-cut-files.svg :: ../lasermade-tools/target/release/make-preview cut-files/ghb-chanter-4-sided-sheet1-cut-files.svg $OUT
 previews/ghb-chanter-6-sided-sheet1-cut-files.svg :: ../lasermade-tools/target/release/make-preview cut-files/ghb-chanter-6-sided-sheet1-cut-files.svg $OUT
 previews/ghb-chanter-8-sided-sheet1-cut-files.svg :: ../lasermade-tools/target/release/make-preview cut-files/ghb-chanter-8-sided-sheet1-cut-files.svg $OUT
-turn.html :: python3 ghb_chanter.py --page-to=$OUT
+turn.html :: target/release/ghb_chanter --page-to=$OUT
 index.html :: ../lasermade-tools/target/release/md2html README.md $OUT

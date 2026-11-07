@@ -1,0 +1,25 @@
+[package]
+name = "ghb-chanter"
+version = "0.1.0"
+edition = "2021"
+authors = ["Michael Gernreich", "Claude (Anthropic) <noreply@anthropic.com>"]
+description = "Cut files for a Great Highland bagpipe chanter: a tapering strip bore of 4, 6 or 8 sides"
+license-file = "LICENSE"
+publish = false
+autobins = false
+
+# It borrows from the checkouts beside this one: practice-chanters' model,
+# geometry and packing, bore-tmm's cone kernel, the square flute's part and
+# kerf, and lasermade-tools for the 3D page.
+[[bin]]
+name = "ghb_chanter"
+path = "ghb_chanter.rs"
+
+[dependencies]
+practice-chanters = { path = "../practice-chanters" }
+lasermade-tools = { path = "../lasermade-tools" }
+square-flute = { path = "../square-flute" }
+bore-tmm = { path = "../bore-tmm" }
+
+[profile.release]
+opt-level = 3

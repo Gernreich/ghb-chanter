@@ -436,15 +436,16 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 <h2 id="turn-it-in-3d">Turn it in 3D</h2>
 <p>The 3D view is at <a href="#bagpipe-chanter">the top of this page</a>. It also opens <a href="turn.html" target="_blank" rel="noopener">on a page of its own</a>.</p>
 <h2 id="regenerating-it">Regenerating it</h2>
-<pre class="sh"><code>python3 ghb_chanter.py --no-write                # the checks
-python3 ghb_chanter.py --out=cut-files           # the sheet, four sides
-python3 ghb_chanter.py --sides=6 --out=cut-files # the sheet, six sides
-python3 ghb_chanter.py --sides=8 --out=cut-files # the sheet, eight sides
-python3 ghb_chanter.py --plate=2.9 --out=mine    # for ply measured at 2.9mm
-python3 ghb_chanter.py --kerf=0.18 --out=mine    # for a laser with a 0.18mm kerf
-python3 ghb_chanter.py --page-to=turn.html       # the 3D view</code></pre>
-<p>The generator imports <code>practice_chanters.py</code>, <code>strip_chanter.py</code> and <code>chanter_model.py</code> from <a href="https://github.com/Gernreich/practice-chanters" target="_blank" rel="noopener">practice-chanters</a>, and that imports from <a href="https://github.com/Gernreich/square-flute" target="_blank" rel="noopener">square-flute</a>, <a href="https://github.com/Gernreich/four-hole-ocarinas" target="_blank" rel="noopener">four-hole-ocarinas</a> and <a href="https://github.com/Gernreich/swept-curve" target="_blank" rel="noopener">swept-curve</a>. The 3D view is written by the <code>turn3d</code> program in <a href="https://github.com/Gernreich/lasermade-tools" target="_blank" rel="noopener">lasermade-tools</a>, built there with <code>cargo build --release</code>. Check them all out side by side.</p>
-<p>One more is optional: with <a href="https://github.com/Gernreich/bore-tmm" target="_blank" rel="noopener">bore-tmm</a> checked out beside it too and built (<code>cargo build --release</code>), the model searches for each note in bore-tmm's Rust port of it, which gives the same results bit for bit, much sooner. Without it the Python runs, as it always did.</p>
+<pre class="sh"><code>cargo build --release                                  # once, and after any change
+target/release/ghb_chanter --no-write                  # the checks
+target/release/ghb_chanter --out=cut-files             # the sheet, four sides
+target/release/ghb_chanter --sides=6 --out=cut-files   # the sheet, six sides
+target/release/ghb_chanter --sides=8 --out=cut-files   # the sheet, eight sides
+target/release/ghb_chanter --plate=2.9 --out=mine      # for ply measured at 2.9mm
+target/release/ghb_chanter --kerf=0.18 --out=mine      # for a laser with a 0.18mm kerf
+target/release/ghb_chanter --page-to=turn.html         # the 3D view
+target/release/ghb_chanter --bores                     # its bores, as bore-tmm reads them</code></pre>
+<p>The generator is Rust since 2026-11-07, and Python before that: the move changed no byte of any cut file or page. It builds on <code>practice_chanters.rs</code>, <code>strip_chanter.rs</code> and <code>chanter_model.rs</code> from <a href="https://github.com/Gernreich/practice-chanters" target="_blank" rel="noopener">practice-chanters</a>, and through them on <a href="https://github.com/Gernreich/square-flute" target="_blank" rel="noopener">square-flute</a>, <a href="https://github.com/Gernreich/four-hole-ocarinas" target="_blank" rel="noopener">four-hole-ocarinas</a> and <a href="https://github.com/Gernreich/swept-curve" target="_blank" rel="noopener">swept-curve</a>; on the cone kernel in <a href="https://github.com/Gernreich/bore-tmm" target="_blank" rel="noopener">bore-tmm</a>'s <code>src/models.rs</code>; and on <a href="https://github.com/Gernreich/lasermade-tools" target="_blank" rel="noopener">lasermade-tools</a> for the 3D view. Check them all out side by side.</p>
 <p>Writing anything, it first checks:</p>
 <ul>
 <li>every note sounds where the Dis-Enchanter's does, in the model;</li>
@@ -457,7 +458,7 @@ python3 ghb_chanter.py --page-to=turn.html       # the 3D view</code></pre>
 <li>the sheet fits the bed, and no two parts on it come closer than the gap.</li>
 </ul>
 <h2 id="the-model">The model</h2>
-<p>The bore is an exact cone, closed at its apex: a conical bore sounds as the whole cone, and the missing tip stands in for the reed. The holes are Keefe's tone holes on it, as in the practice chanters' <a href="https://github.com/Gernreich/practice-chanters/blob/main/chanter_model.py" target="_blank" rel="noopener">chanter_model.py</a>, which supplies the fingering and the scale. The Dis-Enchanter's notes in the model are the targets, and each hole of this chanter is sized until its note matches, to within a cent.</p>
+<p>The bore is an exact cone, closed at its apex: a conical bore sounds as the whole cone, and the missing tip stands in for the reed. The holes are Keefe's tone holes on it, as in the practice chanters' <a href="https://github.com/Gernreich/practice-chanters/blob/main/chanter_model.rs" target="_blank" rel="noopener">chanter_model.rs</a>, which supplies the fingering and the scale. The Dis-Enchanter's notes in the model are the targets, and each hole of this chanter is sized until its note matches, to within a cent.</p>
 <h2 id="files">Files</h2>
 <div class="tw">
 <table>
@@ -483,8 +484,12 @@ python3 ghb_chanter.py --page-to=turn.html       # the 3D view</code></pre>
 <td>the 3D view, on a page of its own</td>
 </tr>
 <tr>
-<td><code>ghb_chanter.py</code></td>
+<td><code>ghb_chanter.rs</code></td>
 <td>the generator: the Dis-Enchanter's measures, the cone model, the tapering strips, its checks</td>
+</tr>
+<tr>
+<td><code>Cargo.toml</code> · <code>Cargo.lock</code></td>
+<td>the crate and its pinned build</td>
 </tr>
 <tr>
 <td><code>README.md</code> · <code>index.html</code></td>

@@ -217,24 +217,26 @@ cut file's own outline, four, six or eight sides.
 ## Regenerating it
 
 ```sh
-python3 ghb_chanter.py --no-write                # the checks
-python3 ghb_chanter.py --out=cut-files           # the sheet, four sides
-python3 ghb_chanter.py --sides=6 --out=cut-files # the sheet, six sides
-python3 ghb_chanter.py --sides=8 --out=cut-files # the sheet, eight sides
-python3 ghb_chanter.py --plate=2.9 --out=mine    # for ply measured at 2.9mm
-python3 ghb_chanter.py --kerf=0.18 --out=mine    # for a laser with a 0.18mm kerf
-python3 ghb_chanter.py --page-to=turn.html       # the 3D view
+cargo build --release                                  # once, and after any change
+target/release/ghb_chanter --no-write                  # the checks
+target/release/ghb_chanter --out=cut-files             # the sheet, four sides
+target/release/ghb_chanter --sides=6 --out=cut-files   # the sheet, six sides
+target/release/ghb_chanter --sides=8 --out=cut-files   # the sheet, eight sides
+target/release/ghb_chanter --plate=2.9 --out=mine      # for ply measured at 2.9mm
+target/release/ghb_chanter --kerf=0.18 --out=mine      # for a laser with a 0.18mm kerf
+target/release/ghb_chanter --page-to=turn.html         # the 3D view
+target/release/ghb_chanter --bores                     # its bores, as bore-tmm reads them
 ```
 
-The generator imports `practice_chanters.py`, `strip_chanter.py` and `chanter_model.py`
-from [practice-chanters](https://github.com/Gernreich/practice-chanters), and that
-imports from [square-flute](https://github.com/Gernreich/square-flute),
+The generator is Rust since 2026-11-07, and Python before that: the move changed no byte
+of any cut file or page. It builds on `practice_chanters.rs`, `strip_chanter.rs` and
+`chanter_model.rs` from [practice-chanters](https://github.com/Gernreich/practice-chanters),
+and through them on [square-flute](https://github.com/Gernreich/square-flute),
 [four-hole-ocarinas](https://github.com/Gernreich/four-hole-ocarinas) and
-[swept-curve](https://github.com/Gernreich/swept-curve). The 3D view is written by the `turn3d`
-program in [lasermade-tools](https://github.com/Gernreich/lasermade-tools), built there with
-`cargo build --release`. Check them all out side by side.
-
-One more is optional: with [bore-tmm](https://github.com/Gernreich/bore-tmm) checked out beside it too and built (`cargo build --release`), the model searches for each note in bore-tmm's Rust port of it, which gives the same results bit for bit, much sooner. Without it the Python runs, as it always did.
+[swept-curve](https://github.com/Gernreich/swept-curve); on the cone kernel in
+[bore-tmm](https://github.com/Gernreich/bore-tmm)'s `src/models.rs`; and on
+[lasermade-tools](https://github.com/Gernreich/lasermade-tools) for the 3D view. Check
+them all out side by side.
 
 Writing anything, it first checks:
 
@@ -252,7 +254,7 @@ Writing anything, it first checks:
 The bore is an exact cone, closed at its apex: a conical bore sounds as the whole cone,
 and the missing tip stands in for the reed. The holes are Keefe's tone holes on it, as in
 the practice chanters'
-[chanter_model.py](https://github.com/Gernreich/practice-chanters/blob/main/chanter_model.py),
+[chanter_model.rs](https://github.com/Gernreich/practice-chanters/blob/main/chanter_model.rs),
 which supplies the fingering and the scale. The Dis-Enchanter's notes in the model are
 the targets, and each hole of this chanter is sized until its note matches, to within a
 cent.
@@ -266,7 +268,8 @@ cent.
 | `cut-files/ghb-chanter-8-sided-sheet1-cut-files.svg` | the eight-sided chanter, the same parts |
 | `previews/ghb-chanter-4-sided-sheet1-cut-files.svg` · `previews/ghb-chanter-6-sided-sheet1-cut-files.svg` · `previews/ghb-chanter-8-sided-sheet1-cut-files.svg` | display renderings of the sheets — **not** cut files |
 | `turn.html` | the 3D view, on a page of its own |
-| `ghb_chanter.py` | the generator: the Dis-Enchanter's measures, the cone model, the tapering strips, its checks |
+| `ghb_chanter.rs` | the generator: the Dis-Enchanter's measures, the cone model, the tapering strips, its checks |
+| `Cargo.toml` · `Cargo.lock` | the crate and its pinned build |
 | `README.md` · `index.html` | this writeup and its published page; the markdown is the source |
 | `.repro` | the command that draws each generated file |
 | `.doc-audit-links` | the one link the link check may find refusing scripts: Thingiverse answers them all 403 |
