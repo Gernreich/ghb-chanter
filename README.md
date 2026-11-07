@@ -234,6 +234,8 @@ imports from [square-flute](https://github.com/Gernreich/square-flute),
 from [lasermade-tools](https://github.com/Gernreich/lasermade-tools). Check them all out
 side by side.
 
+One more is optional: with [bore-tmm](https://github.com/Gernreich/bore-tmm) checked out beside it too and built (`cargo build --release`), the model searches for each note in bore-tmm's Rust port of it, which gives the same results bit for bit, much sooner. Without it the Python runs, as it always did.
+
 Writing anything, it first checks:
 
 - every note sounds where the Dis-Enchanter's does, in the model;

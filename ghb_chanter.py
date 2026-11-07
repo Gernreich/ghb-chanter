@@ -208,7 +208,34 @@ def admittance(f, holes, opened):
 
 
 def sounding(holes, note, near):
-    """The fingering's resonance nearest `near`."""
+    """The fingering's resonance nearest `near`. In bore-tmm's Rust when it
+    is built (practice-chanters/chanter_model.py says how), else _sounding,
+    the same bits."""
+    T = M.tmm_fast
+    if T is None:
+        return _sounding(holes, note, near)
+    return T.run('ghb_chanter', lambda: _sounding_rust(holes, note, near),
+                 lambda: _sounding(holes, note, near))
+
+
+def _sounding_rust(holes, note, near):
+    fing = M.FINGERING[note]
+    zh, r, a, t, op = [], [], [], [], []
+    for name, z, d, wall in sorted(holes, key=lambda h: h[1]):
+        hb = Hole(z)
+        zh.append(z)
+        r.append(hb.hole_r(d))
+        a.append(hb.a)
+        t.append(wall)
+        op.append(name == 'vent' or name in fing)
+    root = M.tmm_fast.cone(M.C, M.RHO, REF_CONE[0], REF_CONE[1], APEX, REF_SOLE, zh, r, a, t, op,
+                           near, 1.25, 60, 30)
+    if math.isnan(root):
+        raise ValueError(f'{note}: no resonance near {near:.0f}Hz')
+    return root
+
+
+def _sounding(holes, note, near):
     fing = M.FINGERING[note]
     lo, hi = near / 1.25, near * 1.25
     Y = lambda f: admittance(f, holes, fing)
