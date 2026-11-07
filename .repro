@@ -1,5 +1,5 @@
 # How every shipped SVG and page in this repository is drawn. Checked by
-# lasermade-tools/repro-svg.py; $OUT is where the file must be written.
+# lasermade-tools' repro-svg; $OUT is where the file must be written.
 #
 # ghb_chanter.py names its own sheet, so it writes into $OUT's directory and
 # the tool compares the file it asked for. It imports practice_chanters.py,
@@ -10,8 +10,8 @@
 cut-files/ghb-chanter-4-sided-sheet1-cut-files.svg :: python3 ghb_chanter.py --out=$(dirname $OUT)
 cut-files/ghb-chanter-6-sided-sheet1-cut-files.svg :: python3 ghb_chanter.py --sides=6 --out=$(dirname $OUT)
 cut-files/ghb-chanter-8-sided-sheet1-cut-files.svg :: python3 ghb_chanter.py --sides=8 --out=$(dirname $OUT)
-previews/ghb-chanter-4-sided-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/ghb-chanter-4-sided-sheet1-cut-files.svg $OUT
-previews/ghb-chanter-6-sided-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/ghb-chanter-6-sided-sheet1-cut-files.svg $OUT
-previews/ghb-chanter-8-sided-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/ghb-chanter-8-sided-sheet1-cut-files.svg $OUT
+previews/ghb-chanter-4-sided-sheet1-cut-files.svg :: ../lasermade-tools/target/release/make-preview cut-files/ghb-chanter-4-sided-sheet1-cut-files.svg $OUT
+previews/ghb-chanter-6-sided-sheet1-cut-files.svg :: ../lasermade-tools/target/release/make-preview cut-files/ghb-chanter-6-sided-sheet1-cut-files.svg $OUT
+previews/ghb-chanter-8-sided-sheet1-cut-files.svg :: ../lasermade-tools/target/release/make-preview cut-files/ghb-chanter-8-sided-sheet1-cut-files.svg $OUT
 turn.html :: python3 ghb_chanter.py --page-to=$OUT
-index.html :: python3 ../lasermade-tools/md2html.py README.md $OUT
+index.html :: ../lasermade-tools/target/release/md2html README.md $OUT
