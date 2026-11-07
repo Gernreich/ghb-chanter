@@ -1,7 +1,0 @@
-# Names doc-audit reads as filenames that are not files here.
-#
-# The generator builds on these from practice-chanters; the README links each
-# repository.
-practice_chanters.rs
-strip_chanter.rs
-chanter_model.rs
