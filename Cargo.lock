@@ -50,6 +50,8 @@ name = "four-hole-ocarinas"
 version = "0.1.0"
 dependencies = [
  "lasermade-tools",
+ "square-flute",
+ "swept-curve",
 ]
 
 [[package]]
@@ -181,7 +183,9 @@ dependencies = [
 name = "square-flute"
 version = "0.1.0"
 dependencies = [
+ "bore-tmm",
  "lasermade-tools",
+ "swept-curve",
 ]
 
 [[package]]
