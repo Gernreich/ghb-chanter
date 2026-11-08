@@ -16,8 +16,14 @@ previews/ghb-chanter-8-sided-sheet1-cut-files.svg :: ../lasermade-tools/target/r
 turn.html :: target/release/ghb_chanter --page-to=$OUT
 index.html :: ../lasermade-tools/target/release/md2html README.md $OUT
 
-# --- the STEP files: the 3D view's parts as solids for a CAD program, one
-# file per design, written from the page by lasermade-tools' step-export ---
-step/ghb-chanter-4-sides.step :: ../lasermade-tools/target/release/step-export turn.html --name=ghb-chanter --out=$(dirname $OUT)
-step/ghb-chanter-6-sides.step :: ../lasermade-tools/target/release/step-export turn.html --name=ghb-chanter --out=$(dirname $OUT)
-step/ghb-chanter-8-sides.step :: ../lasermade-tools/target/release/step-export turn.html --name=ghb-chanter --out=$(dirname $OUT)
+# --- the SolidCraft designs: each script, its design (slimmed by sc-slim so it
+# is the same every run), and the STEP file SolidCraft builds from it ---
+solidcraft/ghb-chanter-4-sides.solidcraft.json :: target/release/ghb_chanter --solidcraft=$(dirname $OUT)
+solidcraft/ghb-chanter-4-sides.sc :: target/release/ghb_chanter --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/ghb-chanter-4-sides.solidcraft.json --save $OUT --quiet && ../lasermade-tools/target/release/sc-slim $OUT
+step/ghb-chanter-4-sides.step :: target/release/ghb_chanter --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/ghb-chanter-4-sides.solidcraft.json --out $OUT --quiet
+solidcraft/ghb-chanter-6-sides.solidcraft.json :: target/release/ghb_chanter --solidcraft=$(dirname $OUT)
+solidcraft/ghb-chanter-6-sides.sc :: target/release/ghb_chanter --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/ghb-chanter-6-sides.solidcraft.json --save $OUT --quiet && ../lasermade-tools/target/release/sc-slim $OUT
+step/ghb-chanter-6-sides.step :: target/release/ghb_chanter --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/ghb-chanter-6-sides.solidcraft.json --out $OUT --quiet
+solidcraft/ghb-chanter-8-sides.solidcraft.json :: target/release/ghb_chanter --solidcraft=$(dirname $OUT)
+solidcraft/ghb-chanter-8-sides.sc :: target/release/ghb_chanter --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/ghb-chanter-8-sides.solidcraft.json --save $OUT --quiet && ../lasermade-tools/target/release/sc-slim $OUT
+step/ghb-chanter-8-sides.step :: target/release/ghb_chanter --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/ghb-chanter-8-sides.solidcraft.json --out $OUT --quiet

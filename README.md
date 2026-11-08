@@ -225,6 +225,7 @@ target/release/ghb_chanter --sides=8 --out=cut-files   # the sheet, eight sides
 target/release/ghb_chanter --plate=2.9 --out=mine      # for ply measured at 2.9mm
 target/release/ghb_chanter --kerf=0.18 --out=mine      # for a laser with a 0.18mm kerf
 target/release/ghb_chanter --page-to=turn.html         # the 3D view
+target/release/ghb_chanter --solidcraft=solidcraft     # the SolidCraft designs
 target/release/ghb_chanter --bores                     # its bores, as bore-tmm reads them
 ```
 
@@ -268,6 +269,7 @@ cent.
 | `cut-files/ghb-chanter-8-sided-sheet1-cut-files.svg` | the eight-sided chanter, the same parts |
 | `previews/ghb-chanter-4-sided-sheet1-cut-files.svg` · `previews/ghb-chanter-6-sided-sheet1-cut-files.svg` · `previews/ghb-chanter-8-sided-sheet1-cut-files.svg` | display renderings of the sheets — **not** cut files |
 | `turn.html` | the 3D view, on a page of its own |
+| `ghb_solidcraft.rs` · `solidcraft/` | the chanter as a parametric SolidCraft design, and the designs it writes |
 | `ghb_chanter.rs` | the generator: the Dis-Enchanter's measures, the cone model, the tapering strips, its checks |
 | `Cargo.toml` · `Cargo.lock` | the crate and its pinned build |
 | `README.md` · `index.html` | this writeup and its published page; the markdown is the source |
@@ -279,16 +281,61 @@ The Dis-Enchanter is by Jeremy Starcher (jstarcher on Thingiverse) and is licens
 from its measures, so it is released under the same licence:
 [CC BY-NC-SA 4.0](LICENSE).
 
+## SolidCraft designs
+
+`ghb_chanter --solidcraft=solidcraft` also writes the chanter as a parametric SolidCraft
+design for each number of sides: the rules it follows are expressions there, so
+changing one number rebuilds the rest. Open a `.sc` from `solidcraft/` in SolidCraft.
+The parameters are under the **SOLID** tab, **MODIFY** panel, **Change Parameters**;
+the Browser lists the parts and the timeline every step. Each `.solidcraft.json` beside
+it is the script it was built from (`solidcraft-cli run FILE --save NAME.sc`). The `.sc`
+holds the design without SolidCraft's build cache, which it rebuilds on opening, so it
+is the same file every time.
+
+- `solidcraft/ghb-chanter-4-sides.sc` · `solidcraft/ghb-chanter-4-sides.solidcraft.json`
+- `solidcraft/ghb-chanter-6-sides.sc` · `solidcraft/ghb-chanter-6-sides.solidcraft.json`
+- `solidcraft/ghb-chanter-8-sides.sc` · `solidcraft/ghb-chanter-8-sides.solidcraft.json`
+
+| Parameter | Default | What it is |
+|---|---|---|
+| `ply` | 3 mm | plate thickness: the strips, every plate, the joints' depth, as `--plate=` |
+| `cone_a` · `cone_b` | 3.463 mm · 0.05132 | the reference's cone, across at the seat's top and per mm down; the strips' faces are its polygon of the same area |
+| `seat_a` · `seat_b` · `seat_deep` · `throat` | 7.155 mm · −0.0991 · 22 · 25.25 mm | the reed's tapered seat, and where the cone starts |
+| `sole` · `tenon_d` · `foot_d` | 345 · 17 · 36.5 mm | the bore's end, the tenon, the round foot |
+| `z_1` … `z_8` · `z_v` | the reference's | each hole down from the seat's top, hA first, and the side holes |
+| `d_1` … `d_8` · `d_v` | the solver's | each round hole's diameter for the reference's note |
+| `web_face` | 0.35 mm | a round hole this much narrower than its face at least; past it a stadium of the same area |
+| `finger` · `min_finger` · `min_web` | 10 · 4 · 1.5 mm | a joint cell, about; no finger shorter; the guard round each hole, where its strip owns both corners |
+| `pin` · `pin_interf` | 2 · 0.1 mm | the tenon's and collar's pins, and their press-fit |
+
+The tuning cannot follow: the holes' sizes are what the model's solver found, and no
+expression redoes it. They are parameters so a chanter tuned by hand can be written
+back into its design; change the cone or the ply and the notes move until the generator
+is run again. The joints do follow, as the generator works them out: `ncell` and
+`cell`, each hole's width and length (`w3_` and `l3_`, round until the face is too
+narrow, worked out three times over as the generator does), each guard (`g0_` and
+`g1_`), and the generator's tidying of short scraps between two guards (`jl_` … `par_`).
+`reach` and `k_back` are a finger's reach past its face's edge and how far the strip
+beside it stands back, from the angle between the faces; where a strip owns neither
+corner and its face is too narrow, the design caps the reach as the generator does.
+The plates are drawn one by one, each its seat's or bead's diameter at its height, so
+the tenon's 7, the collar's 4 and the foot's 2 layers stay those counts.
+
+**Checked** part by part against the generator's own: all 24, 30 and 36 parts match
+to within 0.09 mm, the sag of the earlier STEP files' straight runs round a curve.
+Built by the generator at 2.9 mm ply and given the same numbers, six and eight sides
+match exactly and four sides but for 2.2 mm³ of the side holes' straight runs.
+
 ## STEP files
 
-`step/` holds the 3D view as STEP files, one per design, to open or import in a
-CAD program such as SolidCraft, Fusion or FreeCAD: one solid body per part, in
-millimetres, assembled as the view shows it. Every face is flat, so a curve comes
-in as short straight runs; engraving has no depth and is left out. They are written
-from `turn.html` by lasermade-tools' `step-export`, and `.repro` checks them:
+`step/` holds each SolidCraft design, built by SolidCraft, as a STEP file to open or
+import in a CAD program such as Fusion or FreeCAD: one solid body per part, in
+millimetres, assembled, with no parameters. Holes and plates are true circles.
+`.repro` checks them:
 
 ```
-../lasermade-tools/target/release/step-export turn.html --name=ghb-chanter
+target/release/ghb_chanter --solidcraft=solidcraft
+solidcraft-cli run solidcraft/ghb-chanter-4-sides.solidcraft.json --out step/ghb-chanter-4-sides.step
 ```
 
 The files:

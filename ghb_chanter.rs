@@ -9,6 +9,7 @@
 //!     target/release/ghb_chanter --plate=2.9 ...             # for ply as measured
 //!     target/release/ghb_chanter --kerf=0.18 ...             # for that kerf
 //!     target/release/ghb_chanter --page-to=turn.html         # the 3D view
+//!     target/release/ghb_chanter --solidcraft=DIR            # the SolidCraft designs, every polygon
 //!     target/release/ghb_chanter --bores                     # the bores, for bore-tmm
 //!
 //! THE REFERENCE is Jeremy Starcher's Dis-Enchanter (2017, Thingiverse thing
@@ -66,6 +67,8 @@ use square_flute as sf;
 use std::f64::consts::PI;
 use std::hint::black_box;
 use std::sync::Mutex;
+
+mod ghb_solidcraft;
 
 // --- the reference chanter, measured (mm, down from the seat's top) -----------
 const REF_SEAT: (f64, f64) = (7.155, -0.0991); // the reed's seat, tapered: across at 0, per mm down
@@ -928,7 +931,7 @@ fn main() {
     if std::env::args().nth(1).as_deref() == Some("--bores") {
         return bores();
     }
-    let (mut out, mut write, mut n, mut page_to) = (None::<String>, true, 4usize, None::<String>);
+    let (mut out, mut write, mut n, mut page_to, mut scd) = (None::<String>, true, 4usize, None::<String>, None::<String>);
     for x in std::env::args().skip(1) {
         let val = || x.split_once('=').unwrap().1.to_string();
         if x == "--no-write" {
@@ -946,9 +949,21 @@ fn main() {
             sf::set_kerf(&x);
         } else if x.starts_with("--page-to=") {
             page_to = Some(val());
+        } else if x.starts_with("--solidcraft=") {
+            scd = Some(val());
         } else {
-            die(format!("error: {x} is not a flag this generator reads. It takes --sides=, --out=, --plate=, --kerf=, --page-to= and --no-write."));
+            die(format!("error: {x} is not a flag this generator reads. It takes --sides=, --out=, --plate=, --kerf=, --page-to=, --solidcraft= and --no-write."));
         }
+    }
+    if let Some(dir) = scd {
+        // every polygon's design, whatever --sides= says
+        std::fs::create_dir_all(&dir).unwrap_or_else(|e| die(format!("{dir}: {e}")));
+        for k in [4, 6, 8] {
+            let f = format!("ghb-chanter-{k}-sides.solidcraft.json");
+            std::fs::write(format!("{dir}/{f}"), ghb_solidcraft::script(k)).unwrap_or_else(|e| die(format!("{dir}/{f}: {e}")));
+            println!("  wrote {f}");
+        }
+        return;
     }
     if let Some(pt) = page_to {
         page(&pt);
