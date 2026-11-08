@@ -15,3 +15,9 @@ previews/ghb-chanter-6-sided-sheet1-cut-files.svg :: ../lasermade-tools/target/r
 previews/ghb-chanter-8-sided-sheet1-cut-files.svg :: ../lasermade-tools/target/release/make-preview cut-files/ghb-chanter-8-sided-sheet1-cut-files.svg $OUT
 turn.html :: target/release/ghb_chanter --page-to=$OUT
 index.html :: ../lasermade-tools/target/release/md2html README.md $OUT
+
+# --- the STEP files: the 3D view's parts as solids for a CAD program, one
+# file per design, written from the page by lasermade-tools' step-export ---
+step/ghb-chanter-4-sides.step :: ../lasermade-tools/target/release/step-export turn.html --name=ghb-chanter --out=$(dirname $OUT)
+step/ghb-chanter-6-sides.step :: ../lasermade-tools/target/release/step-export turn.html --name=ghb-chanter --out=$(dirname $OUT)
+step/ghb-chanter-8-sides.step :: ../lasermade-tools/target/release/step-export turn.html --name=ghb-chanter --out=$(dirname $OUT)
