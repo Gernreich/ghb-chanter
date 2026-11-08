@@ -291,6 +291,12 @@ from `turn.html` by lasermade-tools' `step-export`, and `.repro` checks them:
 ../lasermade-tools/target/release/step-export turn.html --name=ghb-chanter
 ```
 
+The files:
+
+- `step/ghb-chanter-4-sides.step`
+- `step/ghb-chanter-6-sides.step`
+- `step/ghb-chanter-8-sides.step`
+
 ## Credits
 
 Made by Michael Gernreich with [Claude](https://www.anthropic.com/claude) (Anthropic), working in Claude Code, which co-wrote the code and the documentation. Commits Claude made carry a `Co-Authored-By: Claude` line.
