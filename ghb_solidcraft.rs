@@ -7,7 +7,10 @@
 //! the plane through the axis along its face, drawn with its fingers, cells,
 //! guards and holes as the generator draws its outline, extruded out through
 //! the whole wall's reach, and then intersected with the slab between the
-//! bore's face and ply outside it, which leans as the cone does. The cone,
+//! bore's face and ply outside it, which leans as the cone does. The
+//! generator's x runs along the face, so the sketch lays it k_lean of that
+//! down the axis, the holes' ends too: else a strip came out 0.15 mm longer
+//! than its cut outline (2026-11-09). The cone,
 //! the ply, the holes and their sizes are parameters; the joints follow them
 //! as the generator works them out. Where the generator's tidy or its cap on
 //! a finger's reach gives a different joint from the rule, the design says
@@ -81,6 +84,7 @@ pub fn script(n: usize) -> String {
     s.len("tenon_d", format!("{} mm", nn(REF_TENON_D)), "the tenon, hemped into the stock");
     s.len("x0", format!("{}*ply", N_TENON + N_COLLAR), &format!("read only: the strips' top, under {N_TENON} tenon and {N_COLLAR} collar plates"));
     s.len("ls", "sole - x0", "read only: the strips' length");
+    s.num("k_lean", "1/sqrt(1 + (k_in*cone_b)*(k_in*cone_b))", "read only: the faces lean with the cone, and a strip drawn ls long along its face reaches this much of ls down the axis");
     s.len("reach", format!("ply*{}", nn(1.0 / (th / 2.0).tan())), "read only: how far a finger reaches past its face's edge");
     s.num("k_back", nn(kb), "read only: how far the strip beside it stands back from the edge, per mm of reach");
     s.len("finger", format!("{} mm", nn(sc::FINGER)), "a joint cell's length, about");
@@ -275,7 +279,9 @@ pub fn script(n: usize) -> String {
         let yd = [0.0, -nx, -ny];
         // a polygon in the strip's (x, u) frame, x down from its top
         let sk = |s: &mut Script, name: &str| s.sketch_on([0.0, 0.0, 0.0], [1.0, 0.0, 0.0], yd, Some(&s0), name);
-        let pt = |x: &str, u: &str| [format!("x0 + ({x})"), format!("-({u})")];
+        // (x along the strip's face, as the generator draws it: down the
+        // axis, k_lean of that)
+        let pt = |x: &str, u: &str| [format!("x0 + ({x})*k_lean"), format!("-({u})")];
         // the band along an edge from x a to b, between the face's edge less k_back reach and `out` past it
         let band = |x0: &str, x1: &str, sg: f64, out: &str| -> Vec<[String; 2]> {
             let e = |x: &str, extra: &str| format!("{}*({}/2 + {extra})", nn(sg), sd(&format!("x0 + ({x})")));
@@ -385,7 +391,7 @@ pub fn script(n: usize) -> String {
         for k in &mine_h {
             let half = format!("(l3_{k} - w3_{k})/2");
             for (e, sg) in [(1, "-"), (2, "+")] {
-                let x = format!("x0 + xh_{k} {sg} {half}");
+                let x = format!("x0 + (xh_{k} {sg} {half})*k_lean");
                 s.cylinder(&format!("{body}, hole {k} end {e}"), [x, lin(&[(nw[1], &s0)]), lin(&[(nw[2], &s0)])], Some(nw), &format!("w3_{k}"), &depth, "cut", &[&body]);
             }
         }

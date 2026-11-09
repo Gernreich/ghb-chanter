@@ -318,13 +318,25 @@ narrow, worked out three times over as the generator does), each guard (`g0_` an
 `reach` and `k_back` are a finger's reach past its face's edge and how far the strip
 beside it stands back, from the angle between the faces; where a strip owns neither
 corner and its face is too narrow, the design caps the reach as the generator does.
+`k_lean` is how far down the axis a length along a leaning face reaches: the generator
+draws each strip's length, joints and holes along its face, so the design lays them
+there too, and a strip cut `ls` long stops 0.08 to 0.10 mm short of the sole, as the
+cut one does.
 The plates are drawn one by one, each its seat's or bead's diameter at its height, so
 the tenon's 7, the collar's 4 and the foot's 2 layers stay those counts.
 
-**Checked** part by part against the generator's own: all 24, 30 and 36 parts match
-to within 0.09 mm, the sag of the earlier STEP files' straight runs round a curve.
-Built by the generator at 2.9 mm ply and given the same numbers, six and eight sides
-match exactly and four sides but for 2.2 mm³ of the side holes' straight runs.
+**Checked** part by part against the generator's own 3D view: all 24, 30 and 36 parts
+matched to within 0.09 mm (2026-11-08), the sag of the earlier STEP files' straight runs
+round a curve. Built by the generator at 2.9 mm ply and given the same numbers, six and
+eight sides matched exactly and four sides but for 2.2 mm³ of the side holes' straight
+runs. Since 2026-11-09 the strips run along their faces as the cut sheet draws them,
+where the 3D view lays them down the axis, so they now stand up to 0.1 mm off it: six
+and eight sides match within 0.105 mm, and four sides but for the side holes and two
+finger holes' edges, which sit 0.04 to 0.06 mm higher than the view's.
+Laid flat again by `sc-flatten` (lasermade-tools) and set beside the committed cut
+sheets, the designs agree to within 0.049 mm on four sides (27 parts), 0.040 mm on six
+(33) and 0.041 mm on eight (39) (2026-11-09); the most is the foot pieces' arcs, round
+in the design and a polygon on the sheet.
 
 ## STEP files
 
