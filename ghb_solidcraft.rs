@@ -15,6 +15,18 @@
 //! as the generator works them out. Where the generator's tidy or its cap on
 //! a finger's reach gives a different joint from the rule, the design says
 //! so with bands whose ends are the same cells and guards, so they follow.
+//!
+//! The ply (2026-11-11): the tidy and the caps are worked out at every ply
+//! from 2.5 to 3.5 mm (at 3.6 the solver finds low G flat), the plies where
+//! they change bisected to a millionth of a mm, and each band is on over the
+//! plies the generator makes it and parked elsewhere, so the design follows
+//! the generator's joints at any ply in that range. The holes' diameters are
+//! the solver's as cubics in the ply (chanters_solidcraft::ply_fits). The
+//! generator's own checks pass from 2.5 to 3.1 mm (the 6 and 8 sides to
+//! 3.2); above that its collar is no longer the reference's bead. Between
+//! 3.183 and 3.192 mm the 8-sided design does not build: the tidy there
+//! leaves a step about a hundredth of a mm long, and SolidCraft's cut of the
+//! side holes' stadia fails on it.
 use super::*;
 use lasermade_tools::solidcraft::{n as nn, Script};
 
@@ -64,97 +76,16 @@ fn yz(p: (f64, f64)) -> (f64, f64) {
     (p.1, -p.0)
 }
 
-pub fn script(n: usize) -> String {
+type Fix = (usize, String, String, usize); // corner, from, to, owner
+type Cap = (usize, String, String, usize, String); // and the capped reach
+
+/// The tidy's and the caps' bands at the generator's ply (see script()).
+fn tidy(n: usize) -> (Vec<Fix>, Vec<Cap>) {
     let (_, _, holes, vent) = solve();
     let t = plate();
-    let tn = (PI / n as f64).tan();
-    let th = PI - 2.0 * PI / n as f64;
-    let kb = (-th.cos()).max(0.0);
-    let mut s = Script::new();
-    s.len("ply", format!("{} mm", nn(t)), "plate thickness: the strips, every plate, and the joints' depth, as the generator's --plate=");
-    s.len("cone_a", format!("{} mm", nn(REF_CONE.0)), "the reference's cone: across at the seat's top, as if it ran up so far");
-    s.num("cone_b", nn(REF_CONE.1), "and its widening per mm down");
-    s.num("k_side", nn((PI * tn / n as f64).sqrt()), &format!("read only: the {n}-sided polygon's side per mm of the round bore's diameter, the same area"));
-    s.num("k_in", nn((PI * tn / n as f64).sqrt() / (2.0 * tn)), "read only: and its inradius");
-    s.len("seat_a", format!("{} mm", nn(REF_SEAT.0)), "the reed's tapered seat: across at the top");
-    s.num("seat_b", nn(REF_SEAT.1), "and per mm down");
-    s.len("seat_deep", format!("{} mm", nn(REF_SEAT_DEEP)), "the seat's depth");
-    s.len("throat", format!("{} mm", nn(REF_THROAT)), "where the cone starts, its narrowest");
-    s.len("sole", format!("{} mm", nn(REF_SOLE)), "the bore's end, down from the seat's top");
-    s.len("tenon_d", format!("{} mm", nn(REF_TENON_D)), "the tenon, hemped into the stock");
-    s.len("x0", format!("{}*ply", N_TENON + N_COLLAR), &format!("read only: the strips' top, under {N_TENON} tenon and {N_COLLAR} collar plates"));
-    s.len("ls", "sole - x0", "read only: the strips' length");
-    s.num("k_lean", "1/sqrt(1 + (k_in*cone_b)*(k_in*cone_b))", "read only: the faces lean with the cone, and a strip drawn ls long along its face reaches this much of ls down the axis");
-    s.len("reach", format!("ply*{}", nn(1.0 / (th / 2.0).tan())), "read only: how far a finger reaches past its face's edge");
-    s.num("k_back", nn(kb), "read only: how far the strip beside it stands back from the edge, per mm of reach");
-    s.len("finger", format!("{} mm", nn(sc::FINGER)), "a joint cell's length, about");
-    s.len("min_finger", format!("{} mm", nn(sc::MIN_FINGER)), "no finger or gap shorter than this: a scrap beside a hole's guard goes to the guard");
-    s.len("min_web", format!("{} mm", nn(pc::MIN_WEB)), "the guard round each hole, where its strip owns both corners");
-    s.len("web_face", format!("{} mm", nn(WEB_FACE)), "a round hole at least this much narrower than its face; past that a stadium");
-    s.num("ncell", "max(1, round(ls/finger))", "read only: joint cells along each corner");
-    s.len("cell", "ls/ncell", "read only: each cell's length");
-    // the holes: hA ... A, then the side holes
     let mut hs: Vec<(String, &str, f64, f64, Vec<usize>)> = holes.iter().map(|&(h, z, d, _)| (h.to_string(), h, z, d, vec![if h == "hA" { n / 2 } else { 0 }])).collect();
     let (va, vb) = vents(n);
     hs.push(("v".into(), "side", REF_VENT.0, vent, vec![va, vb]));
-    for (k, (h, what, z, d, _)) in hs.iter().enumerate() {
-        let k = if h == "v" { "v".to_string() } else { (k + 1).to_string() };
-        let what = if *what == "side" { "the side holes".to_string() } else { format!("the {what} hole") };
-        s.len(&format!("z_{k}"), format!("{} mm", nn(*z)), &format!("{what}, down from the seat's top: the reference's"));
-        s.len(&format!("d_{k}"), format!("{} mm", nn(*d)), "the round hole's diameter, the solver's for the reference's note");
-        // shape(): as wide as the face allows at the hole's top, long enough for the area
-        let mut l = format!("d_{k}");
-        for it in 1..=3 {
-            let w = format!("w{it}_{k}");
-            s.len(&w, format!("min(d_{k}, {} - web_face)", sd(&format!("z_{k} - ({l})/2"))), "read only: its width, worked toward the face's at its top");
-            let nl = format!("l{it}_{k}");
-            s.len(&nl, format!("{w} + max(0, pi*(d_{k}^2 - {w}^2)/4/{w})"), "read only: and its length, for the round hole's area");
-            l = nl;
-        }
-        s.len(&format!("xh_{k}"), format!("z_{k} - x0"), "read only: its centre down the strip");
-    }
-    // each guard, raw: MIN_WEB past its hole; grown over a short scrap to the
-    // cell's edge, but never into the next guard
-    let keys: Vec<String> = hs.iter().enumerate().map(|(k, e)| if e.0 == "v" { "v".to_string() } else { (k + 1).to_string() }).collect();
-    let ra = |k: &str| format!("(xh_{k} - l3_{k}/2 - min_web)");
-    let rb = |k: &str| format!("(xh_{k} + l3_{k}/2 + min_web)");
-    for (q, k) in keys.iter().enumerate() {
-        let (a, b) = (ra(k), rb(k));
-        let fl = format!("({a} - floor({a}/cell)*cell)");
-        let fr = format!("(ceil({b}/cell)*cell - {b})");
-        let mut g0 = format!("{a} - (1 - min(1, floor({fl}/min_finger)))*{fl}");
-        let mut g1 = format!("{b} + (1 - min(1, floor({fr}/min_finger)))*{fr}");
-        if q > 0 {
-            g0 = format!("max({g0}, min({a}, {}))", rb(&keys[q - 1]));
-        }
-        if q + 1 < keys.len() {
-            g1 = format!("min({g1}, max({b}, {}))", ra(&keys[q + 1]));
-        }
-        s.len(&format!("g0_{k}"), g0, "read only: where its guard starts down the strip");
-        s.len(&format!("g1_{k}"), g1, "read only: and ends");
-    }
-    // between two guards one cell's edge apart with both scraps short, the
-    // generator's tidy gives both to one guard, the shorter scrap's first;
-    // with no cell's edge between them the scrap keeps its cell's owner
-    for w in keys.windows(2) {
-        let (i, j) = (&w[0], &w[1]);
-        let (b, a) = (rb(i), ra(j));
-        let p = format!("{i}_{j}");
-        s.num(&format!("jl_{p}"), format!("floor({b}/cell)"), "read only: the cell the scrap after one guard starts in");
-        s.num(&format!("jr_{p}"), format!("floor({a}/cell)"), "read only: and the cell the next guard starts in");
-        s.len(&format!("c_{p}"), format!("(jl_{p} + 1)*cell"), "read only: the cell's edge between them");
-        s.num(&format!("one_{p}"), format!("1 - min(1, abs(jr_{p} - jl_{p} - 1))"), "read only: 1 if one cell's edge is between them");
-        s.num(&format!("none_{p}"), format!("1 - min(1, abs(jr_{p} - jl_{p}))"), "read only: 1 if none is");
-        s.num(&format!("both_{p}"), format!("(1 - min(1, floor(max(0, c_{p} - {b})/min_finger)))*(1 - min(1, floor(max(0, {a} - c_{p})/min_finger)))"), "read only: 1 if both scraps are short");
-        s.num(&format!("lf_{p}"), format!("1 - min(1, ceil(max(0, (c_{p} - {b}) - ({a} - c_{p}))/(0.000001 mm)))"), "read only: 1 if the first scrap is the shorter, tidied first");
-        s.num(&format!("par_{p}"), format!("mod(jl_{p}, 2)"), "read only: that cell's parity");
-    }
-    s.len("hole_room", format!("{} - web_face - d_1", sd("z_1 - l3_1/2")), "read only: hA's face past a round hole, below 0 a stadium");
-    s.len("foot_d", format!("{} mm", nn(FOOT_D)), "the round foot, the reference's sole");
-    s.len("pin", format!("{} mm", nn(pc::PIN)), "the tenon's and collar's brass pins");
-    s.len("pin_interf", format!("{} mm", nn(pc::PIN_INTERF)), "their holes this much under the pin, a press-fit");
-    s.len("r_pin", "(seat_a/2 + tenon_d/2)/2", "read only: the pins' distance from the axis, midway between the seat and the tenon's edge");
-    let ncell0 = py::round((REF_SOLE - (N_TENON + N_COLLAR) as f64 * t) / sc::FINGER).max(1) as usize;
     // each guard's corners: owners() for each hole, its strips own both their corners and their neighbours keep their others
     let mine = |gs: &[usize]| -> Vec<Option<usize>> {
         let mut m: Vec<Option<usize>> = vec![None; n];
@@ -270,6 +201,190 @@ pub fn script(n: usize) -> String {
             }
         }
     }
+    (fixes, caps)
+}
+
+/// What the tidy gives at every ply from 2.5 to 3.5 mm: each band with the
+/// plies it is made at, its edges found to a millionth of a mm, and the
+/// expression that is 1 over those plies and 0 elsewhere.
+fn tidy_by_ply(n: usize) -> (Vec<(Fix, String)>, Vec<(Cap, String)>) {
+    let t0 = plate();
+    let at = |t: f64| {
+        m::PLATE.set(t);
+        let r = tidy(n);
+        m::PLATE.set(t0);
+        r
+    };
+    let grid: Vec<f64> = (0..=100).map(|i| 2.5 + 0.01 * i as f64).collect();
+    // the plies where anything changes, bisected between grid points
+    let mut edges: Vec<f64> = vec![];
+    let mut prev = at(grid[0]);
+    for w in grid.windows(2) {
+        let next = at(w[1]);
+        if next != prev {
+            let (mut lo, mut hi) = (w[0], w[1]);
+            for _ in 0..24 {
+                let mid = (lo + hi) / 2.0;
+                if at(mid) == prev { lo = mid } else { hi = mid }
+            }
+            edges.push((lo + hi) / 2.0);
+        }
+        prev = next;
+    }
+    // the plies between edges, each with what the tidy gives there
+    let mut bounds = vec![2.5 - 1e-9];
+    bounds.extend(&edges);
+    bounds.push(3.5 + 1e-9);
+    let spans: Vec<(f64, f64, (Vec<Fix>, Vec<Cap>))> = bounds.windows(2).map(|w| (w[0], w[1], at((w[0] + w[1]) / 2.0))).collect();
+    let here = at(t0);
+    if spans.iter().find(|sp| sp.0 <= t0 && t0 <= sp.1).map(|sp| &sp.2) != Some(&here) {
+        die("error: the tidy at the shipped ply is not the one its span gives.");
+    }
+    // a band's plies as an expression: the sum, over its spans, of 1 inside
+    let gate = |on: Vec<(f64, f64)>| -> String {
+        let all = on.len() == spans.len();
+        if all {
+            return "1".into();
+        }
+        on.iter()
+            .map(|&(a, b)| {
+                let lo = if a <= 2.5 { "1".to_string() } else { format!("(1 - min(1, ceil(max(0, {} mm - ply)/(0.000001 mm))))", nn(a)) };
+                let hi = if b >= 3.5 { "1".to_string() } else { format!("(1 - min(1, ceil(max(0, ply - {} mm)/(0.000001 mm))))", nn(b)) };
+                format!("{lo}*{hi}")
+            })
+            .collect::<Vec<_>>()
+            .join(" + ")
+    };
+    let mut fx: Vec<Fix> = vec![];
+    let mut cp: Vec<Cap> = vec![];
+    for sp in &spans {
+        for f in &sp.2 .0 {
+            if !fx.contains(f) { fx.push(f.clone()) }
+        }
+        for c in &sp.2 .1 {
+            if !cp.contains(c) { cp.push(c.clone()) }
+        }
+    }
+    let fixes = fx.into_iter().map(|f| { let on = spans.iter().filter(|sp| sp.2 .0.contains(&f)).map(|sp| (sp.0, sp.1)).collect(); (f, gate(on)) }).collect();
+    let caps = cp.into_iter().map(|c| { let on = spans.iter().filter(|sp| sp.2 .1.contains(&c)).map(|sp| (sp.0, sp.1)).collect(); (c, gate(on)) }).collect();
+    (fixes, caps)
+}
+
+pub fn script(n: usize) -> String {
+    let (_, _, holes, vent) = solve();
+    let t = plate();
+    let tn = (PI / n as f64).tan();
+    let th = PI - 2.0 * PI / n as f64;
+    let kb = (-th.cos()).max(0.0);
+    let mut s = Script::new();
+    s.len("ply", format!("{} mm", nn(t)), "plate thickness: the strips, every plate, and the joints' depth, as the generator's --plate=");
+    s.len("cone_a", format!("{} mm", nn(REF_CONE.0)), "the reference's cone: across at the seat's top, as if it ran up so far");
+    s.num("cone_b", nn(REF_CONE.1), "and its widening per mm down");
+    s.num("k_side", nn((PI * tn / n as f64).sqrt()), &format!("read only: the {n}-sided polygon's side per mm of the round bore's diameter, the same area"));
+    s.num("k_in", nn((PI * tn / n as f64).sqrt() / (2.0 * tn)), "read only: and its inradius");
+    s.len("seat_a", format!("{} mm", nn(REF_SEAT.0)), "the reed's tapered seat: across at the top");
+    s.num("seat_b", nn(REF_SEAT.1), "and per mm down");
+    s.len("seat_deep", format!("{} mm", nn(REF_SEAT_DEEP)), "the seat's depth");
+    s.len("throat", format!("{} mm", nn(REF_THROAT)), "where the cone starts, its narrowest");
+    s.len("sole", format!("{} mm", nn(REF_SOLE)), "the bore's end, down from the seat's top");
+    s.len("tenon_d", format!("{} mm", nn(REF_TENON_D)), "the tenon, hemped into the stock");
+    s.len("x0", format!("{}*ply", N_TENON + N_COLLAR), &format!("read only: the strips' top, under {N_TENON} tenon and {N_COLLAR} collar plates"));
+    s.len("ls", "sole - x0", "read only: the strips' length");
+    s.num("k_lean", "1/sqrt(1 + (k_in*cone_b)*(k_in*cone_b))", "read only: the faces lean with the cone, and a strip drawn ls long along its face reaches this much of ls down the axis");
+    s.len("reach", format!("ply*{}", nn(1.0 / (th / 2.0).tan())), "read only: how far a finger reaches past its face's edge");
+    s.num("k_back", nn(kb), "read only: how far the strip beside it stands back from the edge, per mm of reach");
+    s.len("finger", format!("{} mm", nn(sc::FINGER)), "a joint cell's length, about");
+    s.len("min_finger", format!("{} mm", nn(sc::MIN_FINGER)), "no finger or gap shorter than this: a scrap beside a hole's guard goes to the guard");
+    s.len("min_web", format!("{} mm", nn(pc::MIN_WEB)), "the guard round each hole, where its strip owns both corners");
+    s.len("web_face", format!("{} mm", nn(WEB_FACE)), "a round hole at least this much narrower than its face; past that a stadium");
+    s.num("ncell", "max(1, round(ls/finger))", "read only: joint cells along each corner");
+    s.len("cell", "ls/ncell", "read only: each cell's length");
+    // the holes: hA ... A, then the side holes
+    let mut hs: Vec<(String, &str, f64, f64, Vec<usize>)> = holes.iter().map(|&(h, z, d, _)| (h.to_string(), h, z, d, vec![if h == "hA" { n / 2 } else { 0 }])).collect();
+    let (va, vb) = vents(n);
+    hs.push(("v".into(), "side", REF_VENT.0, vent, vec![va, vb]));
+    // the holes' sizes, as the solver gives them at each ply
+    let fits = chanters::chanters_solidcraft::ply_fits(&format!("the {n}-sided chanter"), &|| {
+        let (_, _, holes, vent) = solve();
+        holes.iter().map(|h| h.2).chain([vent]).collect()
+    });
+    for (q, (h, what, z, _, _)) in hs.iter().enumerate() {
+        let k = if h == "v" { "v".to_string() } else { (q + 1).to_string() };
+        let what = if *what == "side" { "the side holes".to_string() } else { format!("the {what} hole") };
+        s.len(&format!("z_{k}"), format!("{} mm", nn(*z)), &format!("{what}, down from the seat's top: the reference's"));
+        s.len(&format!("d_{k}"), &fits[q], "the round hole's diameter, the solver's for the reference's note, as a cubic in the ply");
+        // shape(): as wide as the face allows at the hole's top, long enough for the area
+        let mut l = format!("d_{k}");
+        for it in 1..=3 {
+            let w = format!("w{it}_{k}");
+            s.len(&w, format!("min(d_{k}, {} - web_face)", sd(&format!("z_{k} - ({l})/2"))), "read only: its width, worked toward the face's at its top");
+            let nl = format!("l{it}_{k}");
+            s.len(&nl, format!("{w} + max(0, pi*(d_{k}^2 - {w}^2)/4/{w})"), "read only: and its length, for the round hole's area");
+            l = nl;
+        }
+        s.len(&format!("xh_{k}"), format!("z_{k} - x0"), "read only: its centre down the strip");
+    }
+    // each guard, raw: MIN_WEB past its hole; grown over a short scrap to the
+    // cell's edge, but never into the next guard
+    let keys: Vec<String> = hs.iter().enumerate().map(|(k, e)| if e.0 == "v" { "v".to_string() } else { (k + 1).to_string() }).collect();
+    let ra = |k: &str| format!("(xh_{k} - l3_{k}/2 - min_web)");
+    let rb = |k: &str| format!("(xh_{k} + l3_{k}/2 + min_web)");
+    for (q, k) in keys.iter().enumerate() {
+        let (a, b) = (ra(k), rb(k));
+        let fl = format!("({a} - floor({a}/cell)*cell)");
+        let fr = format!("(ceil({b}/cell)*cell - {b})");
+        let mut g0 = format!("{a} - (1 - min(1, floor({fl}/min_finger)))*{fl}");
+        let mut g1 = format!("{b} + (1 - min(1, floor({fr}/min_finger)))*{fr}");
+        if q > 0 {
+            g0 = format!("max({g0}, min({a}, {}))", rb(&keys[q - 1]));
+        }
+        if q + 1 < keys.len() {
+            g1 = format!("min({g1}, max({b}, {}))", ra(&keys[q + 1]));
+        }
+        s.len(&format!("g0_{k}"), g0, "read only: where its guard starts down the strip");
+        s.len(&format!("g1_{k}"), g1, "read only: and ends");
+    }
+    // between two guards one cell's edge apart with both scraps short, the
+    // generator's tidy gives both to one guard, the shorter scrap's first;
+    // with no cell's edge between them the scrap keeps its cell's owner
+    for w in keys.windows(2) {
+        let (i, j) = (&w[0], &w[1]);
+        let (b, a) = (rb(i), ra(j));
+        let p = format!("{i}_{j}");
+        s.num(&format!("jl_{p}"), format!("floor({b}/cell)"), "read only: the cell the scrap after one guard starts in");
+        s.num(&format!("jr_{p}"), format!("floor({a}/cell)"), "read only: and the cell the next guard starts in");
+        s.len(&format!("c_{p}"), format!("(jl_{p} + 1)*cell"), "read only: the cell's edge between them");
+        s.num(&format!("one_{p}"), format!("1 - min(1, abs(jr_{p} - jl_{p} - 1))"), "read only: 1 if one cell's edge is between them");
+        s.num(&format!("none_{p}"), format!("1 - min(1, abs(jr_{p} - jl_{p}))"), "read only: 1 if none is");
+        s.num(&format!("both_{p}"), format!("(1 - min(1, floor(max(0, c_{p} - {b})/min_finger)))*(1 - min(1, floor(max(0, {a} - c_{p})/min_finger)))"), "read only: 1 if both scraps are short");
+        s.num(&format!("lf_{p}"), format!("1 - min(1, ceil(max(0, (c_{p} - {b}) - ({a} - c_{p}))/(0.000001 mm)))"), "read only: 1 if the first scrap is the shorter, tidied first");
+        s.num(&format!("par_{p}"), format!("mod(jl_{p}, 2)"), "read only: that cell's parity");
+    }
+    s.len("hole_room", format!("{} - web_face - d_1", sd("z_1 - l3_1/2")), "read only: hA's face past a round hole, below 0 a stadium");
+    s.len("foot_d", format!("{} mm", nn(FOOT_D)), "the round foot, the reference's sole");
+    s.len("pin", format!("{} mm", nn(pc::PIN)), "the tenon's and collar's brass pins");
+    s.len("pin_interf", format!("{} mm", nn(pc::PIN_INTERF)), "their holes this much under the pin, a press-fit");
+    s.len("r_pin", "(seat_a/2 + tenon_d/2)/2", "read only: the pins' distance from the axis, midway between the seat and the tenon's edge");
+    let ncell0 = py::round((REF_SOLE - (N_TENON + N_COLLAR) as f64 * t) / sc::FINGER).max(1) as usize;
+    // each guard's corners: owners() for each hole, its strips own both their corners and their neighbours keep their others
+    let mine = |gs: &[usize]| -> Vec<Option<usize>> {
+        let mut m: Vec<Option<usize>> = vec![None; n];
+        for &st in gs {
+            m[(st + n - 1) % n] = Some(st);
+            m[st] = Some(st);
+        }
+        for &st in gs {
+            let c = (st + 1) % n;
+            m[c].get_or_insert(c);
+            m[(st + 2 * n - 2) % n].get_or_insert((st + n - 1) % n);
+        }
+        m
+    };
+    // the generator's tidy and its capped reaches, where they differ from
+    // the rule above: worked out at every ply from 2.5 to 3.5 mm (at 3.6 the solver finds low G flat), each band
+    // on only over the plies where the generator makes it, and parked a
+    // metre down the strip (past the wall it is cut to) elsewhere
+    let (fixes, caps) = tidy_by_ply(n);
     let s0 = format!("{} - 1 mm", ir("x0"));
     let depth = format!("{} - {} + ply + 2 mm", ir("sole"), ir("x0"));
     for i in 0..n {
@@ -347,20 +462,37 @@ pub fn script(n: usize) -> String {
         }
         // then where the generator's tidy differs, after the guards
         let (mut fj, mut fc) = (vec![], vec![]);
-        for (c, a, b, o) in &fixes {
+        // a band off at this ply: a cut a metre down the strip, past the wall
+        // it is cut to, where it misses; a join shrunk to a 0.3 mm square
+        // inside the stand-back, from 0.5 to 0.2 mm in, 30 mm up from the
+        // strip's end, below the side holes, where the strip is widest and
+        // solid already (a join a metre off would be a second solid of the
+        // strip's, which the wall's intersect refuses; one reaching further
+        // in crosses a narrow strip's middle into the cells cut from its
+        // other edge, and fills them; left where it was along the strip, its
+        // edges met the side holes' stadia at some plies, and SolidCraft's
+        // cut of them failed)
+        let park = |x: &str, on: &str| if on == "1" { x.to_string() } else { format!("({x}) + (1 - ({on}))*1000 mm") };
+        let gate = |e: &str, off: &str, on: &str| if on == "1" { e.to_string() } else { format!("({on})*({e}) + (1 - ({on}))*({off})") };
+        let band_in = |x0: &str, x1: &str, sg: f64, inner: &str, out: &str| -> Vec<[String; 2]> {
+            let e = |x: &str, extra: &str| format!("{}*({}/2 + {extra})", nn(sg), sd(&format!("x0 + ({x})")));
+            vec![pt(x0, &e(x0, inner)), pt(x1, &e(x1, inner)), pt(x1, &e(x1, out)), pt(x0, &e(x0, out))]
+        };
+        for ((c, a, b, o), on) in &fixes {
             for (cc, sg) in [((i + n - 1) % n, -1.0), (i, 1.0)] {
                 if cc == *c {
                     if *o == i {
-                        fj.push(band(a, b, sg, "reach"));
+                        let (a, b) = (&gate(a, "ls - 30 mm", on), &gate(b, "ls - 29.7 mm", on));
+                        fj.push(band_in(a, b, sg, &gate("-k_back*reach", "-k_back*reach - 0.5 mm", on), &gate("reach", "-k_back*reach - 0.2 mm", on)));
                     } else {
-                        fc.push(band(a, b, sg, "reach + 1 mm"));
+                        fc.push(band(&park(a, on), &park(b, on), sg, "reach + 1 mm"));
                     }
                 }
             }
         }
         // the capped reaches: the owner's finger shorter, the other strip standing back less
         let (mut cj, mut cc_) = (vec![], vec![]);
-        for (c, a, b, o, cap) in &caps {
+        for ((c, a, b, o, cap), on) in &caps {
             for (cc, sg) in [((i + n - 1) % n, -1.0), (i, 1.0)] {
                 if cc != *c {
                     continue;
@@ -368,9 +500,11 @@ pub fn script(n: usize) -> String {
                 let e = |x: &str, extra: &str| format!("{}*({}/2 + {extra})", nn(sg), sd(&format!("x0 + ({x})")));
                 if *o == i {
                     let (lo, hi) = (format!("{cap}"), "reach + 1 mm".to_string());
+                    let (a, b) = (&park(a, on), &park(b, on));
                     cc_.push(vec![pt(a, &e(a, &lo)), pt(b, &e(b, &lo)), pt(b, &e(b, &hi)), pt(a, &e(a, &hi))]);
                 } else {
-                    let (lo, hi) = ("-k_back*reach - 0.5 mm".to_string(), format!("-k_back*{cap}"));
+                    let (lo, hi) = (gate("-k_back*reach - 0.5 mm", "-k_back*reach - 0.5 mm", on), gate(&format!("-k_back*{cap}"), "-k_back*reach - 0.2 mm", on));
+                    let (a, b) = (&gate(a, "ls - 30 mm", on), &gate(b, "ls - 29.7 mm", on));
                     cj.push(vec![pt(a, &e(a, &lo)), pt(b, &e(b, &lo)), pt(b, &e(b, &hi)), pt(a, &e(a, &hi))]);
                 }
             }

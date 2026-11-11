@@ -303,21 +303,30 @@ is the same file every time.
 | `seat_a` · `seat_b` · `seat_deep` · `throat` | 7.155 mm · −0.0991 · 22 · 25.25 mm | the reed's tapered seat, and where the cone starts |
 | `sole` · `tenon_d` · `foot_d` | 345 · 17 · 36.5 mm | the bore's end, the tenon, the round foot |
 | `z_1` … `z_8` · `z_v` | the reference's | each hole down from the seat's top, hA first, and the side holes |
-| `d_1` … `d_8` · `d_v` | the solver's | each round hole's diameter for the reference's note |
+| `d_1` … `d_8` · `d_v` | the solver's | each round hole's diameter for the reference's note, as a cubic in the ply |
 | `web_face` | 0.35 mm | a round hole this much narrower than its face at least; past it a stadium of the same area |
 | `finger` · `min_finger` · `min_web` | 10 · 4 · 1.5 mm | a joint cell, about; no finger shorter; the guard round each hole, where its strip owns both corners |
 | `pin` · `pin_interf` | 2 · 0.1 mm | the tenon's and collar's pins, and their press-fit |
 
-The tuning cannot follow: the holes' sizes are what the model's solver found, and no
-expression redoes it. They are parameters so a chanter tuned by hand can be written
-back into its design; change the cone or the ply and the notes move until the generator
-is run again. The joints do follow, as the generator works them out: `ncell` and
+The tuning follows the ply but nothing else: the holes' sizes are what the model's
+solver found, and no expression redoes it. The solver was run at every 0.05 mm of ply
+from 2.5 to 3.5 mm (at 3.6 it finds low G flat), and each size is a cubic in the ply
+through the 3 mm value, within 0.002 mm of the solver everywhere. They are parameters
+so a chanter tuned by hand can be written back into its design; change the cone and the
+notes move until the generator is run again. The joints do follow, as the generator works them out: `ncell` and
 `cell`, each hole's width and length (`w3_` and `l3_`, round until the face is too
 narrow, worked out three times over as the generator does), each guard (`g0_` and
 `g1_`), and the generator's tidying of short scraps between two guards (`jl_` … `par_`).
 `reach` and `k_back` are a finger's reach past its face's edge and how far the strip
 beside it stands back, from the angle between the faces; where a strip owns neither
 corner and its face is too narrow, the design caps the reach as the generator does.
+Where the tidy or a cap changes with the ply (on the 8-sided chanter, at eleven plies
+between 2.64 and 3.41 mm; on four and six sides never), each band is on only over the
+plies the generator makes it, and parked elsewhere: a cut a metre down the strip, a
+join a 0.3 mm square inside solid wood 30 mm up from the strip's end. Between 3.183 and
+3.192 mm of ply the 8-sided design does not build: the generator's tidy there leaves a
+step about a hundredth of a millimetre long, and SolidCraft's cut of the side holes
+fails on it.
 `k_lean` is how far down the axis a length along a leaning face reaches: the generator
 draws each strip's length, joints and holes along its face, so the design lays them
 there too, and a strip cut `ls` long stops 0.08 to 0.10 mm short of the sole, as the
@@ -333,6 +342,11 @@ runs. Since 2026-11-09 the strips run along their faces as the cut sheet draws t
 where the 3D view lays them down the axis, so they now stand up to 0.1 mm off it: six
 and eight sides match within 0.105 mm, and four sides but for the side holes and two
 finger holes' edges, which sit 0.04 to 0.06 mm higher than the view's.
+Changed to another ply and laid flat by `sc-flatten`, then set beside the generator's
+sheets at that ply (`sc-replay`), the designs agree (cuts within 0.05 mm) at every ply
+tried where the generator passes its own checks: 2.5, 2.65, 2.7, 2.9, 3.03 and 3.1 mm
+on all three, 2.6 on four and six sides, and on eight 2.645, 2.68, 2.73, 2.8, 3.05 and
+3.2 mm too, beside its switch points (2026-11-11).
 Laid flat again by `sc-flatten` (lasermade-tools) and set beside the committed cut
 sheets, the designs agree to within 0.049 mm on four sides (27 parts), 0.040 mm on six
 (33) and 0.041 mm on eight (39) (2026-11-09); the most is the foot pieces' arcs, round
